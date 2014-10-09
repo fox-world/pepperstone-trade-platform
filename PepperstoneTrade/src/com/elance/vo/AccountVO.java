@@ -5,26 +5,18 @@ import com.elance.nj4x.MT4ConnectionUtil;
 
 public class AccountVO {
 
-	private String serverPort;
 	private String account;
 	private String password;
 	private boolean loginResult;
 	private MT4ConnectionUtil mt4ConnectionUtil;
 	
-	public AccountVO(String serverPort,String account,String password,boolean loginResult,MT4ConnectionUtil mt4ConnectionUtil){
-		this.serverPort=serverPort;
+	public AccountVO(String account,String password,boolean loginResult,MT4ConnectionUtil mt4ConnectionUtil){
 		this.account=account;
 		this.password=password;
 		this.loginResult=loginResult;
 		this.mt4ConnectionUtil=mt4ConnectionUtil;
 	}
 	
-	public String getServerPort() {
-		return serverPort;
-	}
-	public void setServerPort(String serverPort) {
-		this.serverPort = serverPort;
-	}
 	public String getAccount() {
 		return account;
 	}

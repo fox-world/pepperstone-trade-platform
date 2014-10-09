@@ -18,7 +18,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-public class PepperstoneView extends JFrame{
+public class LoginView extends JFrame{
 
 	private static final long serialVersionUID = -2052006109082527150L;
 	
@@ -93,7 +93,7 @@ public class PepperstoneView extends JFrame{
 	private JButton loginButton;
 	private JButton resetButton;
 	
-	public PepperstoneView(){
+	public LoginView(){
 		accountPanel=new JPanel();
 		configPanel=new JPanel();
 		buttonPanel=new JPanel();
@@ -101,7 +101,7 @@ public class PepperstoneView extends JFrame{
 	}
 
 	public static void main(String[] args) {
-		PepperstoneView loginView=new PepperstoneView();
+		LoginView loginView=new LoginView();
 		loginView.startApp();
 	}
 	

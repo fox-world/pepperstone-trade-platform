@@ -16,7 +16,7 @@ public class AccountLoginThread implements Runnable {
 	
 	@Override
 	public void run() {
-		boolean loginResult=accountVO.getMt4ConnectionUtil().coonect(accountVO.getAccount(), accountVO.getPassword(), accountVO.getServerPort());
+		boolean loginResult=accountVO.getMt4ConnectionUtil().coonect(accountVO.getAccount(), accountVO.getPassword());
         accountVO.setLoginResult(loginResult);
         countDownLatch.countDown();
         if(loginResult){
