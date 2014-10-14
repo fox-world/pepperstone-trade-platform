@@ -10,10 +10,10 @@ So far this project only support **[Pepperstone](https://pepperstone.com/)** acc
 
 ##Required
 * jdk1.7.40+
-* jfx-2.2.0.jar (Download it from here [jfx-2.2.0.7z](http://www.jfx-api.com/downloads)) 
+* jfx-2.2.1.jar (Download it from here [jfx-2.2.1.7z](http://www.jfx-api.com/downloads)) 
 * log4j-1.2.16.jar
-##Usage
 
+##Usage
 1. Download this project into your local computer;
 2. In the package ***com.elance.view*** run the java file **LoginView.java**;
 3. In the [Swing](http://docs.oracle.com/javase/7/docs/technotes/guides/swing/) dialog input your trade account and login;

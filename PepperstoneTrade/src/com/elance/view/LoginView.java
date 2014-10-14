@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -17,6 +19,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+
+import com.elance.listener.LoginListener;
+import com.elance.nj4x.MT4ConnectionUtil;
+import com.elance.vo.AccountVO;
 
 public class LoginView extends JFrame{
 
@@ -49,6 +55,7 @@ public class LoginView extends JFrame{
 	private JPanel configPanel;
 	private JPanel buttonPanel;
 	private JPanel mainPanel;
+	private JPanel dataPanel;
 	
 	private JTextField accountText1;
 	private JTextField passwordText1;
@@ -93,11 +100,16 @@ public class LoginView extends JFrame{
 	private JButton loginButton;
 	private JButton resetButton;
 	
+	private List<AccountVO> accountList;
+	
 	public LoginView(){
 		accountPanel=new JPanel();
 		configPanel=new JPanel();
 		buttonPanel=new JPanel();
 		mainPanel=new JPanel();
+		dataPanel=new JPanel();
+		
+		accountList=new ArrayList<AccountVO>(10);
 	}
 
 	public static void main(String[] args) {
@@ -155,16 +167,10 @@ public class LoginView extends JFrame{
 		loginButton = new JButton("Login");
 		loginButton.setBounds(310,10, 80, 25);
 		buttonPanel.add(loginButton);
-		loginButton.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				processingLabel.setVisible(true);
-				loginButton.setEnabled(false);
-				resetButton.setEnabled(true);
-				changeComponentsEnableStatus(false);
-			}
-		});
+		accountList.clear();
+		accountList.add(new AccountVO(accountText1,passwordText1,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText2,passwordText2,new MT4ConnectionUtil()));
+		loginButton.addActionListener(new LoginListener(frame,mainPanel,dataPanel,processingLabel,accountList));
 		
 		resetButton = new JButton("Reset");
 		resetButton.setBounds(400, 10, 80, 25);
