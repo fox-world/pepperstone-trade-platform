@@ -15,7 +15,8 @@ So far this project only support **[Pepperstone](https://pepperstone.com/)** acc
 
 ##Usage
 1. Download this project into your local computer;
-2. In the package ***com.elance.view*** run the java file **LoginView.java**;
+2. In the NJ4X folder,open the ***run\_terminal\_server.bat*** file;
+2. In the package ***com.elance*** run the ***PepperstoneMain.java*** file;
 3. In the [Swing](http://docs.oracle.com/javase/7/docs/technotes/guides/swing/) dialog input your trade account and login;
 
 ##License

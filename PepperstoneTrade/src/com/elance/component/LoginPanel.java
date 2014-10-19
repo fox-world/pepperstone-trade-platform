@@ -1,4 +1,4 @@
-package com.elance.view;
+package com.elance.component;
 
 
 import java.awt.GridBagConstraints;
@@ -24,9 +24,12 @@ import com.elance.listener.LoginListener;
 import com.elance.nj4x.MT4ConnectionUtil;
 import com.elance.vo.AccountVO;
 
-public class LoginView extends JFrame{
-
-	private static final long serialVersionUID = -2052006109082527150L;
+public class LoginPanel extends JPanel{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7217286573720791190L;
 	
 	private static final int COMPONENT_LABEL_WIDTH=80;
 	private static final int COMPONENT_TEXT_WIDTH=160;
@@ -47,14 +50,12 @@ public class LoginView extends JFrame{
 	private static final int COMPONENT_Y_8=230;
 	private static final int COMPONENT_Y_9=260;
 	private static final int COMPONENT_Y_10=290;
-	
-
+		
 	private JFrame frame;
 	
 	private JPanel accountPanel;
 	private JPanel configPanel;
 	private JPanel buttonPanel;
-	private JPanel mainPanel;
 	private JPanel dataPanel;
 	
 	private JTextField accountText1;
@@ -102,49 +103,33 @@ public class LoginView extends JFrame{
 	
 	private List<AccountVO> accountList;
 	
-	public LoginView(){
+	public LoginPanel(JFrame frame){
+		
+		this.frame=frame;
+		
 		accountPanel=new JPanel();
 		configPanel=new JPanel();
 		buttonPanel=new JPanel();
-		mainPanel=new JPanel();
 		dataPanel=new JPanel();
-		
+
 		accountList=new ArrayList<AccountVO>(10);
-	}
-
-	public static void main(String[] args) {
-		LoginView loginView=new LoginView();
-		loginView.startApp();
-	}
-	
-	public void startApp(){
-		frame = new JFrame("Pepperstone Multiple Platform Trade Software");
-		frame.setSize(820,675);
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		frame.add(mainPanel);
-		frame.setLocation(300,150);
-		showLoginPanel();
-
-		frame.setVisible(true);
 	}
 	
 	public void showLoginPanel() {
 
-		mainPanel.setLayout(new GridBagLayout());
+		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.ipadx=800;
 		c.ipady=335;
-		mainPanel.add(accountPanel,c);
+		add(accountPanel,c);
 		c.gridx=0;
 		c.gridy=1;
 		c.ipady=270;
-		mainPanel.add(configPanel,c);
+		add(configPanel,c);
 		c.gridx=0;
 		c.gridy=2;
 		c.ipady=50;
-		mainPanel.add(buttonPanel,c);
+		add(buttonPanel,c);
 		
 		accountPanel.setLayout(null);
 		accountPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),"Input account and password"));
@@ -170,7 +155,7 @@ public class LoginView extends JFrame{
 		accountList.clear();
 		accountList.add(new AccountVO(accountText1,passwordText1,new MT4ConnectionUtil()));
 		accountList.add(new AccountVO(accountText2,passwordText2,new MT4ConnectionUtil()));
-		loginButton.addActionListener(new LoginListener(frame,mainPanel,dataPanel,processingLabel,accountList));
+		loginButton.addActionListener(new LoginListener(frame,this,dataPanel,processingLabel,accountList));
 		
 		resetButton = new JButton("Reset");
 		resetButton.setBounds(400, 10, 80, 25);
