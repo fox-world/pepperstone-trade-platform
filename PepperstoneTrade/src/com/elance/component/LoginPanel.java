@@ -50,7 +50,6 @@ public class LoginPanel extends JPanel{
 	private JPanel accountPanel;
 	private JPanel configPanel;
 	private JPanel buttonPanel;
-	private JPanel dataPanel;
 	
 	private JTextField accountText1;
 	private JTextField passwordText1;
@@ -97,6 +96,9 @@ public class LoginPanel extends JPanel{
 	
 	private List<AccountVO> accountList;
 	
+	public LoginPanel(){
+	}
+	
 	public LoginPanel(JFrame frame){
 		
 		this.frame=frame;
@@ -104,7 +106,6 @@ public class LoginPanel extends JPanel{
 		accountPanel=new JPanel();
 		configPanel=new JPanel();
 		buttonPanel=new JPanel();
-		dataPanel=new JPanel();
 
 		accountList=new ArrayList<AccountVO>(10);
 	}
@@ -149,7 +150,9 @@ public class LoginPanel extends JPanel{
 		accountList.clear();
 		accountList.add(new AccountVO(accountText1,passwordText1,new MT4ConnectionUtil()));
 		accountList.add(new AccountVO(accountText2,passwordText2,new MT4ConnectionUtil()));
-		loginButton.addActionListener(new LoginListener(frame,this,dataPanel,processingLabel,accountList));
+		accountList.add(new AccountVO(accountText3,passwordText3,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText4,passwordText4,new MT4ConnectionUtil()));
+		loginButton.addActionListener(new LoginListener(frame,this,processingLabel,accountList));
 		
 		resetButton = new JButton("Reset");
 		resetButton.setBounds(400, 10, 80, ComponentConstants.BUTTON_HEIGHT);
@@ -444,6 +447,9 @@ public class LoginPanel extends JPanel{
 		passwordText9.setEnabled(isEnabled);
 		accountText10.setEnabled(isEnabled);
 		passwordText10.setEnabled(isEnabled);
+		
+		loginButton.setEnabled(isEnabled);
+		resetButton.setEnabled(!isEnabled);
 	}
 	
 }

@@ -8,29 +8,28 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
+import com.elance.component.DataPanel;
+import com.elance.component.LoginPanel;
 import com.elance.vo.AccountVO;
 
 public class LoginListener implements ActionListener {
 	
 	private JFrame frame;
-	private JPanel loginPanel;
-	private JPanel dataPanel;
+	private LoginPanel loginPanel;
 	private List<AccountVO> accountList;
 	
 	private JLabel processingLabel;
 	private boolean loginProcessFinished;
-	private int loginSuccessCount;
+	private int loginFinishCount;
 	private boolean loginResult;
 	
     public LoginListener(){
     }
     
-    public LoginListener(JFrame frame,JPanel loginPanel,JPanel dataPanel,JLabel processingLabel,List<AccountVO> accountList){
+    public LoginListener(JFrame frame,LoginPanel loginPanel,JLabel processingLabel,List<AccountVO> accountList){
     	this.frame=frame;
     	this.loginPanel=loginPanel;
-    	this.dataPanel=dataPanel;
     	this.accountList=accountList;
     	this.processingLabel=processingLabel;
     }
@@ -39,11 +38,12 @@ public class LoginListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		loginProcessFinished=false;
-		loginSuccessCount=0;
+		loginFinishCount=0;
 		loginResult=false;
 		
 	    processingLabel.setVisible(true);
-		
+	    loginPanel.changeComponentsEnableStatus(false);
+	    
 		 new Thread(new Runnable(){
 
 				@Override
@@ -72,15 +72,16 @@ public class LoginListener implements ActionListener {
 				    	accountVO.setLoginResult(loginResult);
 				    	if(loginResult){
 				    		System.out.println("=========="+accountVO.getAccountText().getText()+" login success!");
-				    		loginSuccessCount++;
 				    	}
+			    		loginFinishCount++;
 				    }
 				    
-				    if(loginSuccessCount==accountList.size()){
+				    if(loginFinishCount==accountList.size()){
 				    	loginProcessFinished=true;
-				    	frame.setTitle("Login Success");
 				    	frame.getContentPane().remove(loginPanel);
+				    	DataPanel dataPanel=new DataPanel(accountList);
 			            frame.getContentPane().add(dataPanel);
+			            dataPanel.initTabPanel();
 			            frame.revalidate();
 				    }
 				
