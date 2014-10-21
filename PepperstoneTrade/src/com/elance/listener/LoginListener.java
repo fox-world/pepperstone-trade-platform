@@ -2,6 +2,7 @@ package com.elance.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +52,7 @@ public class LoginListener implements ActionListener {
 					try {
 						while(!loginProcessFinished){
 							processingLabel.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-							System.out.println("===========account login processing===============");
+							//System.out.println("===========account login processing===============");
 							Thread.sleep(1000);
 						}
 					} catch (InterruptedException e) {
@@ -68,10 +69,18 @@ public class LoginListener implements ActionListener {
 				
 				 loginProcessFinished=false;
 				    for(AccountVO accountVO:accountList){
-				    	loginResult=accountVO.getMt4ConnectionUtil().coonect(accountVO.getAccountText().getText(),accountVO.getPasswordText().getText());
+				    	try {
+							loginResult=accountVO.getMt4ConnectionUtil().coonect(accountVO.getAccountText().getText(),accountVO.getPasswordText().getText());
+						} catch (IOException e) {
+							e.printStackTrace();
+							loginResult=false;
+							accountVO.setErrorMessage(e.getMessage());
+							System.out.println("************"+accountVO.getAccountText().getText()+" login failed,error message "+e.getMessage());
+						}
 				    	accountVO.setLoginResult(loginResult);
 				    	if(loginResult){
 				    		System.out.println("=========="+accountVO.getAccountText().getText()+" login success!");
+				    		accountVO.setConnectTime(new Date());
 				    	}
 			    		loginFinishCount++;
 				    }

@@ -1,6 +1,8 @@
 package com.elance.vo;
 
 
+import java.util.Date;
+
 import javax.swing.JTextField;
 
 import com.elance.nj4x.MT4ConnectionUtil;
@@ -10,6 +12,8 @@ public class AccountVO {
 	private JTextField accountText;
 	private JTextField passwordText;
 	private boolean loginResult;
+	private String errorMessage;
+	private Date connectTime;
 	private MT4ConnectionUtil mt4ConnectionUtil;
 	
 	public AccountVO(){
@@ -52,6 +56,22 @@ public class AccountVO {
 
 	public void setLoginResult(boolean loginResult) {
 		this.loginResult = loginResult;
+	}
+    
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+    
+	public Date getConnectTime() {
+		return connectTime;
+	}
+
+	public void setConnectTime(Date connectTime) {
+		this.connectTime = connectTime;
 	}
 
 	public MT4ConnectionUtil getMt4ConnectionUtil() {
