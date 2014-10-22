@@ -116,35 +116,35 @@ public class DataPanel extends JPanel {
     		JLabel serverConnectTimeLabel=new JLabel("Server connect time: ");
         	JLabel serverConnectTimeValue = new JLabel(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(accountVO.getConnectTime()));
         	serverConnectTimeLabel.setBounds(20, 10, 150,ComponentConstants.COMPONENT_HEIGHT);
-        	serverConnectTimeValue.setBounds(150,10, 200,ComponentConstants.COMPONENT_HEIGHT);
+        	serverConnectTimeValue.setBounds(150,10, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(serverConnectTimeLabel);
         	panel.add(serverConnectTimeValue);
         	
         	JLabel currencyEquityLabel=new JLabel("Currency equity: ");
         	JLabel currencyEquityValue = new JLabel(String.valueOf(accountVO.getMt4ConnectionUtil().accountEquity()));
         	currencyEquityLabel.setBounds(47, 30, 130,ComponentConstants.COMPONENT_HEIGHT);
-        	currencyEquityValue.setBounds(150,30, 200,ComponentConstants.COMPONENT_HEIGHT);
+        	currencyEquityValue.setBounds(150,30, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(currencyEquityLabel);
         	panel.add(currencyEquityValue);
         	
     		JLabel accountBalanceLabel=new JLabel("Account Balance: ");
     		JLabel accountBalanceValue = new JLabel(String.valueOf(accountVO.getMt4ConnectionUtil().accountBalance()));
     		accountBalanceLabel.setBounds(40, 50, 130,ComponentConstants.COMPONENT_HEIGHT);
-    		accountBalanceValue.setBounds(150,50, 200,ComponentConstants.COMPONENT_HEIGHT);
+    		accountBalanceValue.setBounds(150,50, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(accountBalanceLabel);
     		panel.add(accountBalanceValue);
     		
     		JLabel lotSizeForNextTradeLabel=new JLabel("Lot size for next trade:");
     		JLabel lotSizeForNextTradeValue = new JLabel("");
     		lotSizeForNextTradeLabel.setBounds(10, 70, 150,ComponentConstants.COMPONENT_HEIGHT);
-    		lotSizeForNextTradeValue.setBounds(150,70, 200,ComponentConstants.COMPONENT_HEIGHT);
+    		lotSizeForNextTradeValue.setBounds(150,70, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(lotSizeForNextTradeLabel);
     		panel.add(lotSizeForNextTradeValue);
     		
     		JLabel openTradeLotsLabel=new JLabel("Open trade lots:");
     		JLabel openTradeLotsValue = new JLabel("");
     		openTradeLotsLabel.setBounds(47, 90, 150,ComponentConstants.COMPONENT_HEIGHT);
-    		openTradeLotsValue.setBounds(150,90, 200,ComponentConstants.COMPONENT_HEIGHT);
+    		openTradeLotsValue.setBounds(150,90, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(openTradeLotsLabel);
     		panel.add(openTradeLotsValue);
     		
