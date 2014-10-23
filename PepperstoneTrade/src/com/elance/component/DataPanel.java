@@ -9,10 +9,12 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import com.elance.nj4x.MT4ConnectionUtil;
 import com.elance.util.constants.ComponentConstants;
 import com.elance.vo.AccountVO;
 
@@ -93,7 +95,7 @@ public class DataPanel extends JPanel {
         closeHedgeButton.setBounds(432, 5, 120, 25);
         buttonPanel.add(closeHedgeButton);
         
-        JButton loginAgainButton=new JButton("Close Hedge");
+        JButton loginAgainButton=new JButton("Login again");
         loginAgainButton.setBounds(677, 5, 120, 25);
         buttonPanel.add(loginAgainButton);
         
@@ -110,6 +112,8 @@ public class DataPanel extends JPanel {
     	
     	if(loginSuccess){
     
+    		MT4ConnectionUtil mt4Uitl=accountVO.getMt4ConnectionUtil();
+    		
     		tabContent="Data of "+accountVO.getAccountText().getText();
     		panel.setLayout(null);
     		
@@ -121,14 +125,14 @@ public class DataPanel extends JPanel {
         	panel.add(serverConnectTimeValue);
         	
         	JLabel currencyEquityLabel=new JLabel("Currency equity: ");
-        	JLabel currencyEquityValue = new JLabel(String.valueOf(accountVO.getMt4ConnectionUtil().accountEquity()));
+        	JLabel currencyEquityValue = new JLabel(String.valueOf(mt4Uitl.accountEquity()));
         	currencyEquityLabel.setBounds(47, 30, 130,ComponentConstants.COMPONENT_HEIGHT);
         	currencyEquityValue.setBounds(150,30, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(currencyEquityLabel);
         	panel.add(currencyEquityValue);
         	
     		JLabel accountBalanceLabel=new JLabel("Account Balance: ");
-    		JLabel accountBalanceValue = new JLabel(String.valueOf(accountVO.getMt4ConnectionUtil().accountBalance()));
+    		JLabel accountBalanceValue = new JLabel(String.valueOf(mt4Uitl.accountBalance()));
     		accountBalanceLabel.setBounds(40, 50, 130,ComponentConstants.COMPONENT_HEIGHT);
     		accountBalanceValue.setBounds(150,50, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(accountBalanceLabel);
@@ -147,6 +151,16 @@ public class DataPanel extends JPanel {
     		openTradeLotsValue.setBounds(150,90, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(openTradeLotsLabel);
     		panel.add(openTradeLotsValue);
+    		
+    		JLabel currencyPairsLabel=new JLabel("Currency paris:");
+    		currencyPairsLabel.setBounds(50,110, 130, ComponentConstants.COMPONENT_HEIGHT);
+    		List<String> currencyPairList=mt4Uitl.getSymbols();
+    	    String[] currencyPairs=currencyPairList.toArray(new String[currencyPairList.size()]);
+    		JComboBox<String> currencyPairsCombox=new JComboBox<String>(currencyPairs);
+    	    currencyPairsCombox.setBounds(150, 110, 150, ComponentConstants.COMPONENT_HEIGHT);
+    	    panel.add(currencyPairsCombox);
+    	    panel.add(currencyPairsLabel);
+    		
     		
     	}else{
     		tabContent=accountVO.getErrorMessage();

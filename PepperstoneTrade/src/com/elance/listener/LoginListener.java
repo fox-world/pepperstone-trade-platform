@@ -2,7 +2,6 @@ package com.elance.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -71,7 +70,7 @@ public class LoginListener implements ActionListener {
 				    for(AccountVO accountVO:accountList){
 				    	try {
 							loginResult=accountVO.getMt4ConnectionUtil().coonect(accountVO.getAccountText().getText(),accountVO.getPasswordText().getText());
-						} catch (IOException e) {
+						} catch (Exception e) {
 							e.printStackTrace();
 							loginResult=false;
 							accountVO.setErrorMessage(e.getMessage());
