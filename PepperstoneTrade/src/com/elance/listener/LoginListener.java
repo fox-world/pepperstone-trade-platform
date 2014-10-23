@@ -51,7 +51,6 @@ public class LoginListener implements ActionListener {
 					try {
 						while(!loginProcessFinished){
 							processingLabel.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-							//System.out.println("===========account login processing===============");
 							Thread.sleep(1000);
 						}
 					} catch (InterruptedException e) {
@@ -67,18 +66,20 @@ public class LoginListener implements ActionListener {
 			public void run() {
 				
 				 loginProcessFinished=false;
+				 String account=null;
 				    for(AccountVO accountVO:accountList){
+				    	account=accountVO.getAccountText().getText();
 				    	try {
-							loginResult=accountVO.getMt4ConnectionUtil().coonect(accountVO.getAccountText().getText(),accountVO.getPasswordText().getText());
+							loginResult=accountVO.getMt4ConnectionUtil().coonect(account,accountVO.getPasswordText().getText());
 						} catch (Exception e) {
 							e.printStackTrace();
 							loginResult=false;
-							accountVO.setErrorMessage(e.getMessage());
-							System.out.println("************"+accountVO.getAccountText().getText()+" login failed,error message "+e.getMessage());
+							accountVO.setErrorMessage("<html>Account "+account+" login failed,reason:<br/>"+e.getMessage()+"</html>");
+							System.out.println("************"+account+" login failed,error message "+e.getMessage());
 						}
 				    	accountVO.setLoginResult(loginResult);
 				    	if(loginResult){
-				    		System.out.println("=========="+accountVO.getAccountText().getText()+" login success!");
+				    		System.out.println("=========="+account+" login success!");
 				    		accountVO.setConnectTime(new Date());
 				    	}
 			    		loginFinishCount++;

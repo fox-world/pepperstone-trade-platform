@@ -95,7 +95,7 @@ public class DataPanel extends JPanel {
         closeHedgeButton.setBounds(432, 5, 120, 25);
         buttonPanel.add(closeHedgeButton);
         
-        JButton loginAgainButton=new JButton("Login again");
+        JButton loginAgainButton=new JButton("Login Again");
         loginAgainButton.setBounds(677, 5, 120, 25);
         buttonPanel.add(loginAgainButton);
         
