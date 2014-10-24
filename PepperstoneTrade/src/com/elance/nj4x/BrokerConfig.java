@@ -8,7 +8,10 @@ import com.jfx.Broker;
  * Date: 10.06.12
  * Time: 14:21
  */
-public class AccountConfig {
+public class BrokerConfig {
+	
+	public static final String JFX_ACTIVATION_KEY="xxxx";//input your active key here
+	
     public static final Broker MT_4_SERVER = new Broker("MIGBank-Demo");
     public static final Broker PAPER_SERVER = new Broker("Pepperstone-Demo02");
 }
