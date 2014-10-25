@@ -1,6 +1,7 @@
 package com.elance.component;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -12,7 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 import com.elance.nj4x.MT4ConnectionUtil;
 import com.elance.util.constants.ComponentConstants;
@@ -161,6 +164,16 @@ public class DataPanel extends JPanel {
     	    panel.add(currencyPairsCombox);
     	    panel.add(currencyPairsLabel);
     		
+    	    JPanel tablePanel=new JPanel();
+    	    String[] columnNames={"Order","Time","Symbol","Type","Price","Profit"};
+    		Object[][] cells={};
+    		JTable jTable=new JTable(cells,columnNames);
+    		jTable.setPreferredScrollableViewportSize(new Dimension(750, 360));
+    		JScrollPane sPane=new JScrollPane(jTable);
+    		tablePanel.setBounds(5, 135, 780, 410);
+    		tablePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Orders List"));
+    		tablePanel.add(sPane);
+    		panel.add(tablePanel);
     		
     	}else{
     		tabContent=accountVO.getErrorMessage();
