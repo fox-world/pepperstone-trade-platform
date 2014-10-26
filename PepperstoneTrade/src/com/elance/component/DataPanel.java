@@ -175,6 +175,28 @@ public class DataPanel extends JPanel {
     		tablePanel.add(sPane);
     		panel.add(tablePanel);
     		
+
+    		JLabel profiltLabel=new JLabel("Account Profit: ");
+    		JLabel profitValue = new JLabel(String.valueOf(mt4Uitl.accountProfit()));
+    		profiltLabel.setBounds(410, 10, 150,ComponentConstants.COMPONENT_HEIGHT);
+    		profitValue.setBounds(500,10, 150,ComponentConstants.COMPONENT_HEIGHT);
+    		panel.add(profiltLabel);
+    		panel.add(profitValue);
+    		
+    		JLabel marginLabel=new JLabel("Margin: ");
+        	JLabel marginValue = new JLabel(String.valueOf(mt4Uitl.accountMargin()));
+        	marginLabel.setBounds(452, 30, 150,ComponentConstants.COMPONENT_HEIGHT);
+        	marginValue.setBounds(500,30, 150,ComponentConstants.COMPONENT_HEIGHT);
+        	panel.add(marginLabel);
+        	panel.add(marginValue);
+        	
+        	JLabel freeMarginLabel=new JLabel("Free Margin: ");
+        	JLabel freeMarginValue = new JLabel(String.valueOf(mt4Uitl.accountFreeMargin()));
+        	freeMarginLabel.setBounds(425, 50, 150,ComponentConstants.COMPONENT_HEIGHT);
+        	freeMarginValue.setBounds(500,50, 150,ComponentConstants.COMPONENT_HEIGHT);
+        	panel.add(freeMarginLabel);
+        	panel.add(freeMarginValue);
+    		
     	}else{
     		tabContent=accountVO.getErrorMessage();
     		panel.setLayout(new GridLayout(1, 1));
