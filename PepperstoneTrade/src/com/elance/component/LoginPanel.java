@@ -139,8 +139,9 @@ public class LoginPanel extends JPanel{
 		addConfigComponents();
 	
 		//=====================Account cofing information=================
-	    processingLabel=new JLabel("Processing,please wait...");
-	    processingLabel.setBounds(100, 10, 150, 25);
+	    processingLabel=new JLabel("ogin processing");
+	    //processingLabel.setBounds(100, 10, 150, 25);
+	    processingLabel.setBounds(2, 10, 250, 25);
 	    processingLabel.setVisible(false);
 	    buttonPanel.add(processingLabel);
 		
@@ -175,7 +176,7 @@ public class LoginPanel extends JPanel{
 	public void addAccountComponents(){
 		//=====================Account 1=================
 				JLabel accountLabel1 = new JLabel("Account1:");	
-				accountLabel1.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_1,ComponentConstants.COMPONENT_LABEL_WIDTH,ComponentConstants.COMPONENT_HEIGHT);
+				accountLabel1.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_1,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL,ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(accountLabel1);
 
 				accountText1 = new JTextField();
@@ -184,7 +185,7 @@ public class LoginPanel extends JPanel{
 				accountPanel.add(accountText1);
 
 				JLabel passwordLabel = new JLabel("Password1:");
-				passwordLabel.setBounds(PASS_LABEL_X, COMPONENT_Y_1, ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				passwordLabel.setBounds(PASS_LABEL_X, COMPONENT_Y_1, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordLabel);
 
 				passwordText1 = new JPasswordField();
@@ -193,7 +194,7 @@ public class LoginPanel extends JPanel{
 				
 				//=====================Account 2=================
 				JLabel accountLabel2=new JLabel("Account2:");
-				accountLabel2.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_2,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				accountLabel2.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_2,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(accountLabel2);
 				
 				accountText2=new JTextField();
@@ -201,7 +202,7 @@ public class LoginPanel extends JPanel{
 				accountPanel.add(accountText2);
 				
 				JLabel passwordLabel2=new JLabel("Password2:");
-				passwordLabel2.setBounds(PASS_LABEL_X, COMPONENT_Y_2,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				passwordLabel2.setBounds(PASS_LABEL_X, COMPONENT_Y_2,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordLabel2);
 				
 				passwordText2=new JPasswordField();
@@ -210,7 +211,7 @@ public class LoginPanel extends JPanel{
 				
 				//=====================Account 3=================
 				JLabel accountLabel3=new JLabel("Account3:");
-				accountLabel3.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_3,ComponentConstants.COMPONENT_LABEL_WIDTH,ComponentConstants.COMPONENT_HEIGHT);
+				accountLabel3.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_3,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL,ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(accountLabel3);
 				
 				accountText3=new JTextField();
@@ -218,7 +219,7 @@ public class LoginPanel extends JPanel{
 				accountPanel.add(accountText3);
 				
 				JLabel passwordLabel3=new JLabel("Password3:");
-				passwordLabel3.setBounds(PASS_LABEL_X,COMPONENT_Y_3,ComponentConstants.COMPONENT_LABEL_WIDTH,ComponentConstants.COMPONENT_HEIGHT);
+				passwordLabel3.setBounds(PASS_LABEL_X,COMPONENT_Y_3,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL,ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordLabel3);
 				
 				passwordText3=new JPasswordField();
@@ -227,7 +228,7 @@ public class LoginPanel extends JPanel{
 				
 				//=====================Account 4=================
 				JLabel accountLabel4=new JLabel("Account4:");
-				accountLabel4.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_4,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				accountLabel4.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_4,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(accountLabel4);
 				
 				accountText4=new JTextField();
@@ -235,7 +236,7 @@ public class LoginPanel extends JPanel{
 				accountPanel.add(accountText4);
 				
 				JLabel passwordLabel4=new JLabel("Password4:");
-				passwordLabel4.setBounds(PASS_LABEL_X,COMPONENT_Y_4,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				passwordLabel4.setBounds(PASS_LABEL_X,COMPONENT_Y_4,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordLabel4);
 				
 				passwordText4=new JPasswordField();
@@ -244,7 +245,7 @@ public class LoginPanel extends JPanel{
 				
 				//=====================Account 5=================
 				JLabel accountLabel5=new JLabel("Account5:");
-				accountLabel5.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_5,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				accountLabel5.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_5,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(accountLabel5);
 				
 				accountText5=new JTextField();
@@ -252,7 +253,7 @@ public class LoginPanel extends JPanel{
 				accountPanel.add(accountText5);
 				
 				JLabel passwordLabel5=new JLabel("Password5:");
-				passwordLabel5.setBounds(PASS_LABEL_X, COMPONENT_Y_5,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				passwordLabel5.setBounds(PASS_LABEL_X, COMPONENT_Y_5,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordLabel5);
 				
 				passwordText5=new JPasswordField();
@@ -261,7 +262,7 @@ public class LoginPanel extends JPanel{
 				
 				//=====================Account 6=================
 				JLabel accountLabel6=new JLabel("Account6:");
-				accountLabel6.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_6,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				accountLabel6.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_6,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(accountLabel6);
 				
 				accountText6=new JTextField();
@@ -269,7 +270,7 @@ public class LoginPanel extends JPanel{
 				accountPanel.add(accountText6);
 				
 				JLabel passwordLabel6=new JLabel("Password6:");
-				passwordLabel6.setBounds(PASS_LABEL_X, COMPONENT_Y_6,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				passwordLabel6.setBounds(PASS_LABEL_X, COMPONENT_Y_6,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordLabel6);
 				
 				passwordText6=new JPasswordField();
@@ -278,7 +279,7 @@ public class LoginPanel extends JPanel{
 				
 				//=====================Account 7=================
 				JLabel accountLabel7=new JLabel("Account7:");
-				accountLabel7.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_7,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				accountLabel7.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_7,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(accountLabel7);
 				
 				accountText7=new JTextField();
@@ -286,7 +287,7 @@ public class LoginPanel extends JPanel{
 				accountPanel.add(accountText7);
 				
 				JLabel passwordLabel7=new JLabel("Password7:");
-				passwordLabel7.setBounds(PASS_LABEL_X, COMPONENT_Y_7,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				passwordLabel7.setBounds(PASS_LABEL_X, COMPONENT_Y_7,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordLabel7);
 				
 				passwordText7=new JPasswordField();
@@ -295,7 +296,7 @@ public class LoginPanel extends JPanel{
 				
 				//=====================Account 8=================
 				JLabel accountLabel8=new JLabel("Account8:");
-				accountLabel8.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_8,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				accountLabel8.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_8,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(accountLabel8);
 				
 				accountText8=new JTextField();
@@ -303,7 +304,7 @@ public class LoginPanel extends JPanel{
 				accountPanel.add(accountText8);
 				
 				JLabel passwordLabel8=new JLabel("Password8:");
-				passwordLabel8.setBounds(PASS_LABEL_X, COMPONENT_Y_8,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				passwordLabel8.setBounds(PASS_LABEL_X, COMPONENT_Y_8,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordLabel8);
 				
 				passwordText8=new JPasswordField();
@@ -312,7 +313,7 @@ public class LoginPanel extends JPanel{
 				
 				//=====================Account 9=================
 				JLabel accountLabel9=new JLabel("Account9:");
-				accountLabel9.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_9,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				accountLabel9.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_9,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(accountLabel9);
 				
 				accountText9=new JTextField();
@@ -320,7 +321,7 @@ public class LoginPanel extends JPanel{
 				accountPanel.add(accountText9);
 				
 				JLabel passwordLabel9=new JLabel("Password9:");
-				passwordLabel9.setBounds(PASS_LABEL_X,COMPONENT_Y_9,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				passwordLabel9.setBounds(PASS_LABEL_X,COMPONENT_Y_9,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordLabel9);
 				
 				passwordText9=new JPasswordField();
@@ -329,7 +330,7 @@ public class LoginPanel extends JPanel{
 				
 				//=====================Account 10=================
 				JLabel accountLabel10=new JLabel("Account10:");
-				accountLabel10.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_10,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				accountLabel10.setBounds(ACCOUNT_LABEL_X, COMPONENT_Y_10,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(accountLabel10);
 				
 				accountText10=new JTextField();
@@ -337,13 +338,12 @@ public class LoginPanel extends JPanel{
 				accountPanel.add(accountText10);
 				
 				JLabel passwordLabel10=new JLabel("Password10:");
-				passwordLabel10.setBounds(PASS_LABEL_X, COMPONENT_Y_10,ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				passwordLabel10.setBounds(PASS_LABEL_X, COMPONENT_Y_10,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordLabel10);
 				
 				passwordText10=new JPasswordField();
 				passwordText10.setBounds(PASS_TEXT_X, COMPONENT_Y_10, ComponentConstants.COMPONENT_TEXT_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordText10);
-
 	}
 	
 	public void addConfigComponents(){
@@ -356,11 +356,11 @@ public class LoginPanel extends JPanel{
 				SpinnerNumberModel serverNumberSpinnerNumberModel=new SpinnerNumberModel(5, 1, 10,1);
 				serverNumberSpinner=new JSpinner(serverNumberSpinnerNumberModel);
 				serverNumberSpinner.setEditor(new JSpinner.DefaultEditor(serverNumberSpinner));
-				serverNumberSpinner.setBounds(120,20,ComponentConstants.COMPONENT_LABEL_WIDTH,ComponentConstants.COMPONENT_HEIGHT);
+				serverNumberSpinner.setBounds(120,20,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL,ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(serverNumberSpinner);
 				
 				JLabel serverIPLabel=new JLabel("Server IP:");
-				serverIPLabel.setBounds(43, 50, ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				serverIPLabel.setBounds(43, 50, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(serverIPLabel);
 				
 				serverIPText=new JTextField();
@@ -368,7 +368,7 @@ public class LoginPanel extends JPanel{
 				configPanel.add(serverIPText);
 				
 				JLabel serverNameLabel=new JLabel("Server name:");
-				serverNameLabel.setBounds(21,80,ComponentConstants.COMPONENT_LABEL_WIDTH,ComponentConstants.COMPONENT_HEIGHT);
+				serverNameLabel.setBounds(21,80,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL,ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(serverNameLabel);
 				
 				serverNameText=new JTextField();
@@ -376,27 +376,27 @@ public class LoginPanel extends JPanel{
 				configPanel.add(serverNameText);
 				
 				JLabel maxTradeLabel=new JLabel("Max trade:");
-				maxTradeLabel.setBounds(35, 110, ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				maxTradeLabel.setBounds(35, 110, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(maxTradeLabel);
 				
 				SpinnerNumberModel maxTradeSpinnerNumberModel=new SpinnerNumberModel(50, 1, 100,1);
 				maxTradeSpinner=new JSpinner(maxTradeSpinnerNumberModel);
 				maxTradeSpinner.setEditor(new JSpinner.DefaultEditor(maxTradeSpinner));
-				maxTradeSpinner.setBounds(120,110,ComponentConstants.COMPONENT_LABEL_WIDTH,ComponentConstants.COMPONENT_HEIGHT);
+				maxTradeSpinner.setBounds(120,110,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL,ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(maxTradeSpinner);
 				
 				JLabel maxTradesLabel=new JLabel("Max trades:");
-				maxTradesLabel.setBounds(28, 140, ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				maxTradesLabel.setBounds(28, 140, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(maxTradesLabel);
 				
 				SpinnerNumberModel maxTradesSpinnerNumberModel=new SpinnerNumberModel(100, 1, 200,1);
 				maxTradesSpinner=new JSpinner(maxTradesSpinnerNumberModel);
 				maxTradesSpinner.setEditor(new JSpinner.DefaultEditor(maxTradesSpinner));
-				maxTradesSpinner.setBounds(120,140,ComponentConstants.COMPONENT_LABEL_WIDTH,ComponentConstants.COMPONENT_HEIGHT);
+				maxTradesSpinner.setBounds(120,140,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL,ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(maxTradesSpinner);
 				
 				JLabel lotSizeLabel=new JLabel("Lot size:");
-				lotSizeLabel.setBounds(48, 170, ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				lotSizeLabel.setBounds(48, 170, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(lotSizeLabel);
 				
 				lotSizeText=new JTextField();
@@ -404,7 +404,7 @@ public class LoginPanel extends JPanel{
 				configPanel.add(lotSizeText);
 				
 				JLabel hedgePipsLabel=new JLabel("Hedge at pips:");
-				hedgePipsLabel.setBounds(15, 200, ComponentConstants.COMPONENT_LABEL_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				hedgePipsLabel.setBounds(15, 200, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(hedgePipsLabel);
 				
 				hedgePipsText=new JTextField();
@@ -412,7 +412,7 @@ public class LoginPanel extends JPanel{
 				configPanel.add(hedgePipsText);
 				
 				JLabel hedgeProtectionLabel=new JLabel("Hedge protection:");
-				hedgeProtectionLabel.setBounds(15, 230, ComponentConstants.COMPONENT_LABEL_WIDTH+30, ComponentConstants.COMPONENT_HEIGHT);
+				hedgeProtectionLabel.setBounds(15, 230, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL+30, ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(hedgeProtectionLabel);
 				
 				ButtonGroup hedgeProButtonGroup=new ButtonGroup();

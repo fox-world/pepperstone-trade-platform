@@ -2,7 +2,6 @@ package com.elance.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -48,10 +47,18 @@ public class LoginListener implements ActionListener {
 
 				@Override
 				public void run() {
+					int num=0;
+					StringBuffer sb=new StringBuffer();
 					try {
 						while(!loginProcessFinished){
-							processingLabel.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-							Thread.sleep(1000);
+							sb.setLength(0);
+							sb.append("Login processing");
+							num=++num%8;
+	                        for(int i=0;i<num;i++){
+	                        	sb.append("••");
+	                        }
+							processingLabel.setText(sb.toString());
+							Thread.sleep(100);
 						}
 					} catch (InterruptedException e) {
 						e.printStackTrace();
