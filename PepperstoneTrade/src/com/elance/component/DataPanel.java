@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import com.elance.nj4x.MT4ConnectionUtil;
 import com.elance.util.constants.ComponentConstants;
@@ -107,7 +108,7 @@ public class DataPanel extends JPanel {
         buttonPanel.add(loginAgainButton);
         
         //The following line enables to use scrolling tabs.
-        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT); updateTabContent(tabbedPane,accountList);
     }
     
     protected JPanel makeTextPanel(AccountVO accountVO) {
@@ -164,34 +165,39 @@ public class DataPanel extends JPanel {
     		List<String> currencyPairList=mt4Uitl.getSymbols();
     	    String[] currencyPairs=currencyPairList.toArray(new String[currencyPairList.size()]);
     		JComboBox<String> currencyPairsCombox=new JComboBox<String>(currencyPairs);
+    		currencyPairsCombox.setSelectedItem(mt4Uitl.getSymbol());
     	    currencyPairsCombox.setBounds(150, 110, 150, ComponentConstants.COMPONENT_HEIGHT);
     	    panel.add(currencyPairsCombox);
     	    panel.add(currencyPairsLabel);
     		
     	    JPanel tablePanel=new JPanel();
-    	    String[] columnNames={"Order","Time","Symbol","Type","Price","Profit"};
+    	    String[] columnNames={"Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
     	    DateFormat format=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
     		int availableOrdersCount=mt4Uitl.ordersTotal();
-    		Object[][] cells=new Object[availableOrdersCount][6];
+    		Object[][] cells=new Object[availableOrdersCount][9];
     		OrderInfo orderInfo=null;
     		for(int i=0;i<availableOrdersCount;i++){
     			orderInfo =mt4Uitl.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
     			cells[i][0]=orderInfo.ticket();
     			cells[i][1]=format.format(orderInfo.getOpenTime());
-    			cells[i][2]=orderInfo.getSymbol();
-    			cells[i][3]=orderInfo.getType();
-    			cells[i][4]=orderInfo.getOpenPrice();
-    			cells[i][5]=orderInfo.getProfit();
+    			cells[i][2]=orderInfo.getType();
+    			cells[i][3]=orderInfo.getLots();
+    			cells[i][4]=orderInfo.getSymbol();
+    			cells[i][5]=orderInfo.getOpenPrice();
+    			cells[i][6]=orderInfo.getCommission();
+    			cells[i][7]=orderInfo.getSwap();
+    			cells[i][8]=orderInfo.getProfit();
+    			
     		}
     		JTable jTable=new JTable(cells,columnNames);
     		jTable.setPreferredScrollableViewportSize(new Dimension(750, 360));
+    		this.setJTableColumnWidth(jTable);
     		JScrollPane sPane=new JScrollPane(jTable);
     		tablePanel.setBounds(5, 135, 780, 410);
     		tablePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(),"Orders List"));
     		tablePanel.add(sPane);
     		panel.add(tablePanel);
     		
-
     		JLabel profiltLabel=new JLabel("Account Profit: ");
     		JLabel profitValue = new JLabel(String.valueOf(mt4Uitl.accountProfit()));
     		profiltLabel.setBounds(410, 10, 150,ComponentConstants.COMPONENT_HEIGHT);
@@ -221,6 +227,34 @@ public class DataPanel extends JPanel {
             panel.add(filler);
     	}
         return panel;
+    }
+    
+    public void updateTabContent(JTabbedPane tabbedPane,List<AccountVO> accountList){
+    	try {
+    		int selectedIndex=0;
+    		AccountVO accountVO=null;
+    		while(true){
+    			selectedIndex=tabbedPane.getSelectedIndex();
+    			accountVO=accountList.get(selectedIndex);
+    			tabbedPane.remove(selectedIndex);
+    			tabbedPane.insertTab(accountVO.getAccountText().getText(), null, makeTextPanel(accountVO), null, selectedIndex+1);
+    			Thread.sleep(1000);	
+    		}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public void setJTableColumnWidth(JTable jTable){
+    	DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		jTable.setDefaultRenderer(Object.class, centerRenderer);
+		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		//jTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		jTable.getColumnModel().getColumn(0).setPreferredWidth(60);
+		jTable.getColumnModel().getColumn(1).setPreferredWidth(140);
+		jTable.getColumnModel().getColumn(2).setPreferredWidth(55);
+		jTable.getColumnModel().getColumn(8).setPreferredWidth(120);
     }
     
 }
