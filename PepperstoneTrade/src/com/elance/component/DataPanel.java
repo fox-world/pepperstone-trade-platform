@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -20,6 +21,9 @@ import javax.swing.JTable;
 import com.elance.nj4x.MT4ConnectionUtil;
 import com.elance.util.constants.ComponentConstants;
 import com.elance.vo.AccountVO;
+import com.jfx.SelectionPool;
+import com.jfx.SelectionType;
+import com.jfx.strategy.OrderInfo;
 
 public class DataPanel extends JPanel {
 
@@ -166,7 +170,19 @@ public class DataPanel extends JPanel {
     		
     	    JPanel tablePanel=new JPanel();
     	    String[] columnNames={"Order","Time","Symbol","Type","Price","Profit"};
-    		Object[][] cells={};
+    	    DateFormat format=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+    		int availableOrdersCount=mt4Uitl.ordersTotal();
+    		Object[][] cells=new Object[availableOrdersCount][6];
+    		OrderInfo orderInfo=null;
+    		for(int i=0;i<availableOrdersCount;i++){
+    			orderInfo =mt4Uitl.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
+    			cells[i][0]=orderInfo.ticket();
+    			cells[i][1]=format.format(orderInfo.getOpenTime());
+    			cells[i][2]=orderInfo.getSymbol();
+    			cells[i][3]=orderInfo.getType();
+    			cells[i][4]=orderInfo.getOpenPrice();
+    			cells[i][5]=orderInfo.getProfit();
+    		}
     		JTable jTable=new JTable(cells,columnNames);
     		jTable.setPreferredScrollableViewportSize(new Dimension(750, 360));
     		JScrollPane sPane=new JScrollPane(jTable);
