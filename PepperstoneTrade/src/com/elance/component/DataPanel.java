@@ -133,14 +133,14 @@ public class DataPanel extends JPanel {
         	panel.add(serverConnectTimeValue);
         	
         	JLabel currencyEquityLabel=new JLabel("Currency equity: ");//3
-        	JLabel currencyEquityValue = new JLabel(String.valueOf(mt4Util.accountEquity()));//4
+        	JLabel currencyEquityValue = new JLabel(String.format("%.2f",mt4Util.accountEquity()));//4
         	currencyEquityLabel.setBounds(47, 30, 130,ComponentConstants.COMPONENT_HEIGHT);
         	currencyEquityValue.setBounds(150,30, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(currencyEquityLabel);
         	panel.add(currencyEquityValue);
         	
     		JLabel accountBalanceLabel=new JLabel("Account Balance: ");//5
-    		JLabel accountBalanceValue = new JLabel(String.valueOf(mt4Util.accountBalance()));//6
+    		JLabel accountBalanceValue = new JLabel(String.format("%.2f",mt4Util.accountBalance()));//6
     		accountBalanceLabel.setBounds(40, 50, 130,ComponentConstants.COMPONENT_HEIGHT);
     		accountBalanceValue.setBounds(150,50, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(accountBalanceLabel);
@@ -199,21 +199,21 @@ public class DataPanel extends JPanel {
     		panel.add(tablePanel);
     		
     		JLabel profiltLabel=new JLabel("Account Profit: ");//13
-    		JLabel profitValue = new JLabel(String.valueOf(mt4Util.accountProfit()));//14
+    		JLabel profitValue = new JLabel(String.format("%.2f",mt4Util.accountProfit()));//14
     		profiltLabel.setBounds(410, 10, 150,ComponentConstants.COMPONENT_HEIGHT);
     		profitValue.setBounds(500,10, 150,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(profiltLabel);
     		panel.add(profitValue);
     		
     		JLabel marginLabel=new JLabel("Margin: ");//15
-        	JLabel marginValue = new JLabel(String.valueOf(mt4Util.accountMargin()));//16
+        	JLabel marginValue = new JLabel(String.format("%.2f",mt4Util.accountMargin()));//16
         	marginLabel.setBounds(452, 30, 150,ComponentConstants.COMPONENT_HEIGHT);
         	marginValue.setBounds(500,30, 150,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(marginLabel);
         	panel.add(marginValue);
         	
         	JLabel freeMarginLabel=new JLabel("Free Margin: ");//17
-        	JLabel freeMarginValue = new JLabel(String.valueOf(mt4Util.accountFreeMargin()));//18
+        	JLabel freeMarginValue = new JLabel(String.format("%.2f",mt4Util.accountFreeMargin()));//18
         	freeMarginLabel.setBounds(425, 50, 150,ComponentConstants.COMPONENT_HEIGHT);
         	freeMarginValue.setBounds(500,50, 150,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(freeMarginLabel);
@@ -249,19 +249,19 @@ public class DataPanel extends JPanel {
     	MT4ConnectionUtil mt4Util=accountVO.getMt4ConnectionUtil();
     	
     	JLabel accountEquitylabel=(JLabel) panel.getComponent(3);
-		accountEquitylabel.setText(String.valueOf(mt4Util.accountEquity()));
+		accountEquitylabel.setText(String.format("%.2f",mt4Util.accountEquity()));
 		
 		JLabel accountBalancelabel=(JLabel) panel.getComponent(5);
-		accountBalancelabel.setText(String.valueOf(mt4Util.accountBalance()));
+		accountBalancelabel.setText(String.format("%.2f",mt4Util.accountBalance()));
 		
 		JLabel accountProfitlabel=(JLabel) panel.getComponent(14);
-		accountProfitlabel.setText(String.valueOf(mt4Util.accountProfit()));
+		accountProfitlabel.setText(String.format("%.2f",mt4Util.accountProfit()));
 		
 		JLabel accountMarginlabel=(JLabel) panel.getComponent(16);
-		accountMarginlabel.setText(String.valueOf(mt4Util.accountMargin()));
+		accountMarginlabel.setText(String.format("%.2f",mt4Util.accountMargin()));
 		
 		JLabel accountFreeMarginlabel=(JLabel) panel.getComponent(18);
-		accountFreeMarginlabel.setText(String.valueOf(mt4Util.accountFreeMargin()));
+		accountFreeMarginlabel.setText(String.format("%.2f",mt4Util.accountFreeMargin()));
 		
 		JPanel tablePanel=(JPanel) panel.getComponent(12);
 		 String[] columnNames={"Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
