@@ -120,64 +120,64 @@ public class DataPanel extends JPanel {
     	
     	if(loginSuccess){
     
-    		MT4ConnectionUtil mt4Uitl=accountVO.getMt4ConnectionUtil();
+    		MT4ConnectionUtil mt4Util=accountVO.getMt4ConnectionUtil();
     		
     		tabContent="Data of "+accountVO.getAccountText().getText();
     		panel.setLayout(null);
     		
-    		JLabel serverConnectTimeLabel=new JLabel("Server connect time: ");
-        	JLabel serverConnectTimeValue = new JLabel(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(accountVO.getConnectTime()));
+    		JLabel serverConnectTimeLabel=new JLabel("Server connect time: ");//1
+        	JLabel serverConnectTimeValue = new JLabel(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(accountVO.getConnectTime()));//2
         	serverConnectTimeLabel.setBounds(20, 10, 150,ComponentConstants.COMPONENT_HEIGHT);
         	serverConnectTimeValue.setBounds(150,10, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(serverConnectTimeLabel);
         	panel.add(serverConnectTimeValue);
         	
-        	JLabel currencyEquityLabel=new JLabel("Currency equity: ");
-        	JLabel currencyEquityValue = new JLabel(String.valueOf(mt4Uitl.accountEquity()));
+        	JLabel currencyEquityLabel=new JLabel("Currency equity: ");//3
+        	JLabel currencyEquityValue = new JLabel(String.valueOf(mt4Util.accountEquity()));//4
         	currencyEquityLabel.setBounds(47, 30, 130,ComponentConstants.COMPONENT_HEIGHT);
         	currencyEquityValue.setBounds(150,30, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(currencyEquityLabel);
         	panel.add(currencyEquityValue);
         	
-    		JLabel accountBalanceLabel=new JLabel("Account Balance: ");
-    		JLabel accountBalanceValue = new JLabel(String.valueOf(mt4Uitl.accountBalance()));
+    		JLabel accountBalanceLabel=new JLabel("Account Balance: ");//5
+    		JLabel accountBalanceValue = new JLabel(String.valueOf(mt4Util.accountBalance()));//6
     		accountBalanceLabel.setBounds(40, 50, 130,ComponentConstants.COMPONENT_HEIGHT);
     		accountBalanceValue.setBounds(150,50, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(accountBalanceLabel);
     		panel.add(accountBalanceValue);
     		
-    		JLabel lotSizeForNextTradeLabel=new JLabel("Lot size for next trade:");
-    		JLabel lotSizeForNextTradeValue = new JLabel("");
+    		JLabel lotSizeForNextTradeLabel=new JLabel("Lot size for next trade:");//7
+    		JLabel lotSizeForNextTradeValue = new JLabel("");//8
     		lotSizeForNextTradeLabel.setBounds(10, 70, 150,ComponentConstants.COMPONENT_HEIGHT);
     		lotSizeForNextTradeValue.setBounds(150,70, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(lotSizeForNextTradeLabel);
     		panel.add(lotSizeForNextTradeValue);
     		
-    		JLabel openTradeLotsLabel=new JLabel("Open trade lots:");
-    		JLabel openTradeLotsValue = new JLabel("");
+    		JLabel openTradeLotsLabel=new JLabel("Open trade lots:");//9
+    		JLabel openTradeLotsValue = new JLabel("");//10
     		openTradeLotsLabel.setBounds(47, 90, 150,ComponentConstants.COMPONENT_HEIGHT);
     		openTradeLotsValue.setBounds(150,90, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(openTradeLotsLabel);
     		panel.add(openTradeLotsValue);
     		
-    		JLabel currencyPairsLabel=new JLabel("Currency paris:");
+    		JLabel currencyPairsLabel=new JLabel("Currency paris:");//10
     		currencyPairsLabel.setBounds(50,110, 130, ComponentConstants.COMPONENT_HEIGHT);
-    		List<String> currencyPairList=mt4Uitl.getSymbols();
+    		List<String> currencyPairList=mt4Util.getSymbols();
     	    String[] currencyPairs=currencyPairList.toArray(new String[currencyPairList.size()]);
-    		JComboBox<String> currencyPairsCombox=new JComboBox<String>(currencyPairs);
-    		currencyPairsCombox.setSelectedItem(mt4Uitl.getSymbol());
+    		JComboBox<String> currencyPairsCombox=new JComboBox<String>(currencyPairs);//11
+    		currencyPairsCombox.setSelectedItem(mt4Util.getSymbol());
     	    currencyPairsCombox.setBounds(150, 110, 150, ComponentConstants.COMPONENT_HEIGHT);
     	    panel.add(currencyPairsCombox);
     	    panel.add(currencyPairsLabel);
     		
-    	    JPanel tablePanel=new JPanel();
+    	    JPanel tablePanel=new JPanel();//12
     	    String[] columnNames={"Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
     	    DateFormat format=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-    		int availableOrdersCount=mt4Uitl.ordersTotal();
+    		int availableOrdersCount=mt4Util.ordersTotal();
     		Object[][] cells=new Object[availableOrdersCount][9];
     		OrderInfo orderInfo=null;
     		for(int i=0;i<availableOrdersCount;i++){
-    			orderInfo =mt4Uitl.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
+    			orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
     			cells[i][0]=orderInfo.ticket();
     			cells[i][1]=format.format(orderInfo.getOpenTime());
     			cells[i][2]=orderInfo.getType();
@@ -198,27 +198,26 @@ public class DataPanel extends JPanel {
     		tablePanel.add(sPane);
     		panel.add(tablePanel);
     		
-    		JLabel profiltLabel=new JLabel("Account Profit: ");
-    		JLabel profitValue = new JLabel(String.valueOf(mt4Uitl.accountProfit()));
+    		JLabel profiltLabel=new JLabel("Account Profit: ");//13
+    		JLabel profitValue = new JLabel(String.valueOf(mt4Util.accountProfit()));//14
     		profiltLabel.setBounds(410, 10, 150,ComponentConstants.COMPONENT_HEIGHT);
     		profitValue.setBounds(500,10, 150,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(profiltLabel);
     		panel.add(profitValue);
     		
-    		JLabel marginLabel=new JLabel("Margin: ");
-        	JLabel marginValue = new JLabel(String.valueOf(mt4Uitl.accountMargin()));
+    		JLabel marginLabel=new JLabel("Margin: ");//15
+        	JLabel marginValue = new JLabel(String.valueOf(mt4Util.accountMargin()));//16
         	marginLabel.setBounds(452, 30, 150,ComponentConstants.COMPONENT_HEIGHT);
         	marginValue.setBounds(500,30, 150,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(marginLabel);
         	panel.add(marginValue);
         	
-        	JLabel freeMarginLabel=new JLabel("Free Margin: ");
-        	JLabel freeMarginValue = new JLabel(String.valueOf(mt4Uitl.accountFreeMargin()));
+        	JLabel freeMarginLabel=new JLabel("Free Margin: ");//17
+        	JLabel freeMarginValue = new JLabel(String.valueOf(mt4Util.accountFreeMargin()));//18
         	freeMarginLabel.setBounds(425, 50, 150,ComponentConstants.COMPONENT_HEIGHT);
         	freeMarginValue.setBounds(500,50, 150,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(freeMarginLabel);
         	panel.add(freeMarginValue);
-    		
     	}else{
     		tabContent=accountVO.getErrorMessage();
     		panel.setLayout(new GridLayout(1, 1));
@@ -236,8 +235,8 @@ public class DataPanel extends JPanel {
     		while(true){
     			selectedIndex=tabbedPane.getSelectedIndex();
     			accountVO=accountList.get(selectedIndex);
-    			tabbedPane.remove(selectedIndex);
-    			tabbedPane.insertTab(accountVO.getAccountText().getText(), null, makeTextPanel(accountVO), null, selectedIndex+1);
+    			JPanel panel=(JPanel) tabbedPane.getSelectedComponent();
+    			updateTabeContent(panel, accountVO);
     			Thread.sleep(1000);	
     		}
 		} catch (InterruptedException e) {
@@ -245,12 +244,70 @@ public class DataPanel extends JPanel {
 		}
     }
     
+    public void updateTabeContent(JPanel panel,AccountVO accountVO){
+    	
+    	MT4ConnectionUtil mt4Util=accountVO.getMt4ConnectionUtil();
+    	
+    	JLabel accountEquitylabel=(JLabel) panel.getComponent(3);
+		accountEquitylabel.setText(String.valueOf(mt4Util.accountEquity()));
+		
+		JLabel accountBalancelabel=(JLabel) panel.getComponent(5);
+		accountBalancelabel.setText(String.valueOf(mt4Util.accountBalance()));
+		
+		JLabel accountProfitlabel=(JLabel) panel.getComponent(14);
+		accountProfitlabel.setText(String.valueOf(mt4Util.accountProfit()));
+		
+		JLabel accountMarginlabel=(JLabel) panel.getComponent(16);
+		accountMarginlabel.setText(String.valueOf(mt4Util.accountMargin()));
+		
+		JLabel accountFreeMarginlabel=(JLabel) panel.getComponent(18);
+		accountFreeMarginlabel.setText(String.valueOf(mt4Util.accountFreeMargin()));
+		
+		JPanel tablePanel=(JPanel) panel.getComponent(12);
+		 String[] columnNames={"Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
+ 	    DateFormat format=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+ 		int availableOrdersCount=mt4Util.ordersTotal();
+ 		Object[][] cells=new Object[availableOrdersCount][9];
+ 		OrderInfo orderInfo=null;
+ 		for(int i=0;i<availableOrdersCount;i++){
+ 			orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
+ 			cells[i][0]=orderInfo.ticket();
+ 			cells[i][1]=format.format(orderInfo.getOpenTime());
+ 			cells[i][2]=orderInfo.getType();
+ 			cells[i][3]=orderInfo.getLots();
+ 			cells[i][4]=orderInfo.getSymbol();
+ 			cells[i][5]=orderInfo.getOpenPrice();
+ 			cells[i][6]=orderInfo.getCommission();
+ 			cells[i][7]=orderInfo.getSwap();
+ 			cells[i][8]=orderInfo.getProfit();
+ 			
+ 		}
+ 		JTable jTable=new JTable(cells,columnNames);
+ 		jTable.setPreferredScrollableViewportSize(new Dimension(750, 360));
+ 		this.setJTableColumnWidth(jTable);
+ 		JScrollPane sPane=new JScrollPane(jTable);
+ 		tablePanel.remove(0);
+ 		tablePanel.add(sPane);
+		
+    }
+    
     public void setJTableColumnWidth(JTable jTable){
     	DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		jTable.setDefaultRenderer(Object.class, centerRenderer);
+    	centerRenderer.setHorizontalAlignment( JLabel.CENTER);
+		DefaultTableCellRenderer rightRenderer=new DataTableCellRender();
+		
 		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		//jTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		
+		jTable.getColumnModel().getColumn(0).setCellRenderer(rightRenderer);
+		jTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		jTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+		jTable.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+		jTable.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+		jTable.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
+		jTable.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
+		jTable.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+		jTable.getColumnModel().getColumn(8).setCellRenderer(rightRenderer);
+		
 		jTable.getColumnModel().getColumn(0).setPreferredWidth(60);
 		jTable.getColumnModel().getColumn(1).setPreferredWidth(140);
 		jTable.getColumnModel().getColumn(2).setPreferredWidth(55);
