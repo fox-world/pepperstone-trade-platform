@@ -193,7 +193,7 @@ public class DataPanel extends JPanel {
     			cells[i][8]=orderInfo.getProfit();
     			
     		}
-    		totalLotsForNextTradeValue.setText(String.format("%.2f",totalLots));
+    		openTradeLotsValue.setText(String.format("%.2f",totalLots));
     		JTable jTable=new JTable(cells,columnNames);
     		jTable.setPreferredScrollableViewportSize(new Dimension(750, 360));
     		this.setJTableColumnWidth(jTable);
@@ -298,7 +298,7 @@ public class DataPanel extends JPanel {
  		tablePanel.remove(0);
  		tablePanel.add(sPane);
  		
- 		JLabel totalLotsForNextTradeLabel=(JLabel) panel.getComponent(7);
+ 		JLabel totalLotsForNextTradeLabel=(JLabel) panel.getComponent(9);
  		totalLotsForNextTradeLabel.setText(String.format("%.2f",totalLots));
 		
     }
