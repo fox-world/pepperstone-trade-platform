@@ -146,12 +146,12 @@ public class DataPanel extends JPanel {
     		panel.add(accountBalanceLabel);
     		panel.add(accountBalanceValue);
     		
-    		JLabel lotSizeForNextTradeLabel=new JLabel("Lot size for next trade:");//7
-    		JLabel lotSizeForNextTradeValue = new JLabel("");//8
-    		lotSizeForNextTradeLabel.setBounds(10, 70, 150,ComponentConstants.COMPONENT_HEIGHT);
-    		lotSizeForNextTradeValue.setBounds(150,70, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
-    		panel.add(lotSizeForNextTradeLabel);
-    		panel.add(lotSizeForNextTradeValue);
+    		JLabel totalLotsForNextTradeLabel=new JLabel("Total lots next trade:");//7
+    		JLabel totalLotsForNextTradeValue = new JLabel("");//8
+    		totalLotsForNextTradeLabel.setBounds(20, 70, 150,ComponentConstants.COMPONENT_HEIGHT);
+    		totalLotsForNextTradeValue.setBounds(150,70, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
+    		panel.add(totalLotsForNextTradeLabel);
+    		panel.add(totalLotsForNextTradeValue);
     		
     		JLabel openTradeLotsLabel=new JLabel("Open trade lots:");//9
     		JLabel openTradeLotsValue = new JLabel("");//10
@@ -176,12 +176,16 @@ public class DataPanel extends JPanel {
     		int availableOrdersCount=mt4Util.ordersTotal();
     		Object[][] cells=new Object[availableOrdersCount][9];
     		OrderInfo orderInfo=null;
+    		double totalLots=0;
+    		double lots=0;
     		for(int i=0;i<availableOrdersCount;i++){
     			orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
     			cells[i][0]=orderInfo.ticket();
     			cells[i][1]=format.format(orderInfo.getOpenTime());
     			cells[i][2]=orderInfo.getType();
-    			cells[i][3]=orderInfo.getLots();
+    			lots=orderInfo.getLots();
+    			totalLots+=lots;
+    			cells[i][3]=lots;
     			cells[i][4]=orderInfo.getSymbol();
     			cells[i][5]=orderInfo.getOpenPrice();
     			cells[i][6]=orderInfo.getCommission();
@@ -189,6 +193,7 @@ public class DataPanel extends JPanel {
     			cells[i][8]=orderInfo.getProfit();
     			
     		}
+    		totalLotsForNextTradeValue.setText(String.format("%.2f",totalLots));
     		JTable jTable=new JTable(cells,columnNames);
     		jTable.setPreferredScrollableViewportSize(new Dimension(750, 360));
     		this.setJTableColumnWidth(jTable);
@@ -269,12 +274,16 @@ public class DataPanel extends JPanel {
  		int availableOrdersCount=mt4Util.ordersTotal();
  		Object[][] cells=new Object[availableOrdersCount][9];
  		OrderInfo orderInfo=null;
+ 		double totalLots=0;
+		double lots=0;
  		for(int i=0;i<availableOrdersCount;i++){
  			orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
  			cells[i][0]=orderInfo.ticket();
  			cells[i][1]=format.format(orderInfo.getOpenTime());
  			cells[i][2]=orderInfo.getType();
- 			cells[i][3]=orderInfo.getLots();
+ 			lots=orderInfo.getLots();
+ 			totalLots+=lots;
+ 			cells[i][3]=lots;
  			cells[i][4]=orderInfo.getSymbol();
  			cells[i][5]=orderInfo.getOpenPrice();
  			cells[i][6]=orderInfo.getCommission();
@@ -288,6 +297,9 @@ public class DataPanel extends JPanel {
  		JScrollPane sPane=new JScrollPane(jTable);
  		tablePanel.remove(0);
  		tablePanel.add(sPane);
+ 		
+ 		JLabel totalLotsForNextTradeLabel=(JLabel) panel.getComponent(7);
+ 		totalLotsForNextTradeLabel.setText(String.format("%.2f",totalLots));
 		
     }
     
