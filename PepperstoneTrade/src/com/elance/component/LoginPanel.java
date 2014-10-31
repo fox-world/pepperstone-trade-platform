@@ -375,12 +375,12 @@ public class LoginPanel extends JPanel{
 				serverNameText.setBounds(120, 80, ComponentConstants.COMPONENT_TEXT_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(serverNameText);
 				
-				JLabel maxTradeLabel=new JLabel("Max trade:");
-				maxTradeLabel.setBounds(35, 110, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
-				configPanel.add(maxTradeLabel);
+				JLabel maxLotsLabel=new JLabel("Max lots:");
+				maxLotsLabel.setBounds(45, 110, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
+				configPanel.add(maxLotsLabel);
 				
-				SpinnerNumberModel maxTradeSpinnerNumberModel=new SpinnerNumberModel(50, 1, 100,1);
-				maxTradeSpinner=new JSpinner(maxTradeSpinnerNumberModel);
+				SpinnerNumberModel maxLotsSpinnerNumberModel=new SpinnerNumberModel(50, 1, 100,1);
+				maxTradeSpinner=new JSpinner(maxLotsSpinnerNumberModel);
 				maxTradeSpinner.setEditor(new JSpinner.DefaultEditor(maxTradeSpinner));
 				maxTradeSpinner.setBounds(120,110,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL,ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(maxTradeSpinner);
