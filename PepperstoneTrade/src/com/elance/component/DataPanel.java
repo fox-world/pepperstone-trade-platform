@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import com.elance.nj4x.MT4ConnectionUtil;
 import com.elance.util.constants.ComponentConstants;
+import com.elance.vo.AccountConfig;
 import com.elance.vo.AccountVO;
 import com.jfx.SelectionPool;
 import com.jfx.SelectionType;
@@ -34,12 +35,14 @@ public class DataPanel extends JPanel {
 	private JPanel buttonPanel;
 	
 	private List<AccountVO> accountList;
+	private AccountConfig accountConfig;
 	
 	public DataPanel(){
 	}
 	
-	public DataPanel(List<AccountVO> accountList){
+	public DataPanel(List<AccountVO> accountList,AccountConfig accountConfig){
 		this.accountList=accountList;
+		this.accountConfig=accountConfig;
 	}
 
 	public void initTabPanel() {
@@ -70,7 +73,7 @@ public class DataPanel extends JPanel {
         JPanel panel=null;
         for(AccountVO accountVO:accountList){
             account=accountVO.getAccountText().getText();
-        	panel = makeTextPanel(accountVO);
+        	panel = makeTextPanel(accountVO,accountConfig);
             tabbedPane.addTab(account, null, panel,"Data of "+account);
             if(accountVO.isLoginResult()){
             	tabbedPane.setForegroundAt(index,Color.BLUE);
@@ -108,10 +111,12 @@ public class DataPanel extends JPanel {
         buttonPanel.add(loginAgainButton);
         
         //The following line enables to use scrolling tabs.
-        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT); updateTabContent(tabbedPane,accountList);
+        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT); 
+        
+        updateTabContent(tabbedPane,accountList,accountConfig);
     }
     
-    protected JPanel makeTextPanel(AccountVO accountVO) {
+    protected JPanel makeTextPanel(AccountVO accountVO,AccountConfig accountConfig) {
     	
     	JPanel panel = new JPanel(false);
     	
@@ -139,19 +144,22 @@ public class DataPanel extends JPanel {
         	panel.add(currencyEquityLabel);
         	panel.add(currencyEquityValue);
         	
+        	double accountBalance=mt4Util.accountBalance();
     		JLabel accountBalanceLabel=new JLabel("Account Balance: ");//5
-    		JLabel accountBalanceValue = new JLabel(String.format("%.2f",mt4Util.accountBalance()));//6
+    		JLabel accountBalanceValue = new JLabel(String.format("%.2f",accountBalance));//6
     		accountBalanceLabel.setBounds(40, 50, 130,ComponentConstants.COMPONENT_HEIGHT);
     		accountBalanceValue.setBounds(150,50, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(accountBalanceLabel);
     		panel.add(accountBalanceValue);
     		
+    		double totalLotsForNextTrade=accountBalance/(1000/Double.parseDouble(accountConfig.getLotSizeText().getText()));
     		JLabel totalLotsForNextTradeLabel=new JLabel("Total lots next trade:");//7
-    		JLabel totalLotsForNextTradeValue = new JLabel("");//8
+    		JLabel totalLotsForNextTradeValue = new JLabel(String.format("%.2f",totalLotsForNextTrade));//8
     		totalLotsForNextTradeLabel.setBounds(20, 70, 150,ComponentConstants.COMPONENT_HEIGHT);
     		totalLotsForNextTradeValue.setBounds(150,70, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(totalLotsForNextTradeLabel);
     		panel.add(totalLotsForNextTradeValue);
+    		
     		
     		JLabel openTradeLotsLabel=new JLabel("Open trade lots:");//9
     		JLabel openTradeLotsValue = new JLabel("");//10
@@ -233,7 +241,7 @@ public class DataPanel extends JPanel {
         return panel;
     }
     
-    public void updateTabContent(JTabbedPane tabbedPane,List<AccountVO> accountList){
+    public void updateTabContent(JTabbedPane tabbedPane,List<AccountVO> accountList,AccountConfig accountConfig){
     	try {
     		int selectedIndex=0;
     		AccountVO accountVO=null;
@@ -241,7 +249,7 @@ public class DataPanel extends JPanel {
     			selectedIndex=tabbedPane.getSelectedIndex();
     			accountVO=accountList.get(selectedIndex);
     			JPanel panel=(JPanel) tabbedPane.getSelectedComponent();
-    			updateTabeContent(panel, accountVO);
+    			updateTabeContent(panel, accountVO,accountConfig);
     			Thread.sleep(1000);	
     		}
 		} catch (InterruptedException e) {
@@ -249,7 +257,7 @@ public class DataPanel extends JPanel {
 		}
     }
     
-    public void updateTabeContent(JPanel panel,AccountVO accountVO){
+    public void updateTabeContent(JPanel panel,AccountVO accountVO,AccountConfig accountConfig){
     	
     	MT4ConnectionUtil mt4Util=accountVO.getMt4ConnectionUtil();
     	
@@ -257,7 +265,12 @@ public class DataPanel extends JPanel {
 		accountEquitylabel.setText(String.format("%.2f",mt4Util.accountEquity()));
 		
 		JLabel accountBalancelabel=(JLabel) panel.getComponent(5);
-		accountBalancelabel.setText(String.format("%.2f",mt4Util.accountBalance()));
+		double accountBalance=mt4Util.accountBalance();
+		accountBalancelabel.setText(String.format("%.2f",accountBalance));
+		
+		double totalLotsForNextTrade=accountBalance/(1000/Double.parseDouble(accountConfig.getLotSizeText().getText()));
+		JLabel totalLotsForNextTradeLabel=(JLabel) panel.getComponent(7);
+		totalLotsForNextTradeLabel.setText(String.format("%.2f",totalLotsForNextTrade));
 		
 		JLabel accountProfitlabel=(JLabel) panel.getComponent(14);
 		accountProfitlabel.setText(String.format("%.2f",mt4Util.accountProfit()));
@@ -298,8 +311,8 @@ public class DataPanel extends JPanel {
  		tablePanel.remove(0);
  		tablePanel.add(sPane);
  		
- 		JLabel totalLotsForNextTradeLabel=(JLabel) panel.getComponent(9);
- 		totalLotsForNextTradeLabel.setText(String.format("%.2f",totalLots));
+ 		JLabel openTradeLotsLabel=(JLabel) panel.getComponent(9);
+ 		openTradeLotsLabel.setText(String.format("%.2f",totalLots));
 		
     }
     

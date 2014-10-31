@@ -1,6 +1,5 @@
 package com.elance.component;
 
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -23,6 +22,7 @@ import javax.swing.SpinnerNumberModel;
 import com.elance.listener.LoginListener;
 import com.elance.nj4x.MT4ConnectionUtil;
 import com.elance.util.constants.ComponentConstants;
+import com.elance.vo.AccountConfig;
 import com.elance.vo.AccountVO;
 
 public class LoginPanel extends JPanel{
@@ -85,16 +85,19 @@ public class LoginPanel extends JPanel{
 	private JSpinner serverNumberSpinner;
 	private JTextField serverIPText;
 	private JTextField serverNameText;
-	private JSpinner maxTradeSpinner;
+	private JSpinner maxLotsSpinner;
 	private JSpinner maxTradesSpinner;
 	private JTextField lotSizeText;
 	private JTextField hedgePipsText;
+	private ButtonGroup hedgeProButtonGroup;
 
 	private JLabel processingLabel;
 	private JButton loginButton;
 	private JButton resetButton;
 	
 	private List<AccountVO> accountList;
+	
+	private AccountConfig accountConfig;
 	
 	public LoginPanel(){
 	}
@@ -108,6 +111,7 @@ public class LoginPanel extends JPanel{
 		buttonPanel=new JPanel();
 
 		accountList=new ArrayList<AccountVO>(10);
+		accountConfig=new AccountConfig();
 	}
 	
 	public void showLoginPanel() {
@@ -153,7 +157,13 @@ public class LoginPanel extends JPanel{
 		accountList.add(new AccountVO(accountText2,passwordText2,new MT4ConnectionUtil()));
 		accountList.add(new AccountVO(accountText3,passwordText3,new MT4ConnectionUtil()));
 		accountList.add(new AccountVO(accountText4,passwordText4,new MT4ConnectionUtil()));
-		loginButton.addActionListener(new LoginListener(frame,this,processingLabel,accountList));
+		loginButton.addActionListener(new LoginListener(frame,this,processingLabel,accountList,accountConfig));
+		
+		accountConfig.setMaxLotsSpinner(maxLotsSpinner);
+		accountConfig.setMaxTradesSpinner(maxTradesSpinner);
+		accountConfig.setLotSizeText(lotSizeText);
+		accountConfig.setHedgePipsText(hedgePipsText);
+		accountConfig.setHedgeProButtonGroup(hedgeProButtonGroup);
 		
 		resetButton = new JButton("Reset");
 		resetButton.setBounds(400, 10, 80, ComponentConstants.BUTTON_HEIGHT);
@@ -380,10 +390,10 @@ public class LoginPanel extends JPanel{
 				configPanel.add(maxLotsLabel);
 				
 				SpinnerNumberModel maxLotsSpinnerNumberModel=new SpinnerNumberModel(50, 1, 100,1);
-				maxTradeSpinner=new JSpinner(maxLotsSpinnerNumberModel);
-				maxTradeSpinner.setEditor(new JSpinner.DefaultEditor(maxTradeSpinner));
-				maxTradeSpinner.setBounds(120,110,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL,ComponentConstants.COMPONENT_HEIGHT);
-				configPanel.add(maxTradeSpinner);
+				maxLotsSpinner=new JSpinner(maxLotsSpinnerNumberModel);
+				maxLotsSpinner.setEditor(new JSpinner.DefaultEditor(maxLotsSpinner));
+				maxLotsSpinner.setBounds(120,110,ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL,ComponentConstants.COMPONENT_HEIGHT);
+				configPanel.add(maxLotsSpinner);
 				
 				JLabel maxTradesLabel=new JLabel("Max trades:");
 				maxTradesLabel.setBounds(28, 140, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
@@ -399,7 +409,7 @@ public class LoginPanel extends JPanel{
 				lotSizeLabel.setBounds(48, 170, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL, ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(lotSizeLabel);
 				
-				lotSizeText=new JTextField();
+				lotSizeText=new JTextField("2.5");
 				lotSizeText.setBounds(120,170,ComponentConstants.COMPONENT_TEXT_WIDTH,ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(lotSizeText);
 				
@@ -415,7 +425,7 @@ public class LoginPanel extends JPanel{
 				hedgeProtectionLabel.setBounds(15, 230, ComponentConstants.COMPONENT_LABEL_WIDTH_SMALL+30, ComponentConstants.COMPONENT_HEIGHT);
 				configPanel.add(hedgeProtectionLabel);
 				
-				ButtonGroup hedgeProButtonGroup=new ButtonGroup();
+				hedgeProButtonGroup=new ButtonGroup();
 				JRadioButton yesButton=new JRadioButton("Yes",true);
 				hedgeProButtonGroup.add(yesButton);
 				yesButton.setBounds(140, 230, 50, 25);

@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 
 import com.elance.component.DataPanel;
 import com.elance.component.LoginPanel;
+import com.elance.vo.AccountConfig;
 import com.elance.vo.AccountVO;
 
 public class LoginListener implements ActionListener {
@@ -17,6 +18,7 @@ public class LoginListener implements ActionListener {
 	private JFrame frame;
 	private LoginPanel loginPanel;
 	private List<AccountVO> accountList;
+	private AccountConfig accountConfig;
 	
 	private JLabel processingLabel;
 	private boolean loginProcessFinished;
@@ -26,11 +28,12 @@ public class LoginListener implements ActionListener {
     public LoginListener(){
     }
     
-    public LoginListener(JFrame frame,LoginPanel loginPanel,JLabel processingLabel,List<AccountVO> accountList){
+    public LoginListener(JFrame frame,LoginPanel loginPanel,JLabel processingLabel,List<AccountVO> accountList,AccountConfig accountConfig){
     	this.frame=frame;
     	this.loginPanel=loginPanel;
     	this.accountList=accountList;
     	this.processingLabel=processingLabel;
+    	this.accountConfig=accountConfig;
     }
 
 	@Override
@@ -95,7 +98,7 @@ public class LoginListener implements ActionListener {
 				    if(loginFinishCount==accountList.size()){
 				    	loginProcessFinished=true;
 				    	frame.getContentPane().remove(loginPanel);
-				    	DataPanel dataPanel=new DataPanel(accountList);
+				    	DataPanel dataPanel=new DataPanel(accountList,accountConfig);
 			            frame.getContentPane().add(dataPanel);
 			            dataPanel.initTabPanel();
 			            frame.revalidate();
