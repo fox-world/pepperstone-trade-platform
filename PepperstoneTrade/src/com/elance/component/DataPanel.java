@@ -137,22 +137,22 @@ public class DataPanel extends JPanel {
         	panel.add(serverConnectTimeLabel);
         	panel.add(serverConnectTimeValue);
         	
+        	double accountEquity=mt4Util.accountEquity();
         	JLabel currencyEquityLabel=new JLabel("Currency equity: ");//3
-        	JLabel currencyEquityValue = new JLabel(String.format("%.2f",mt4Util.accountEquity()));//4
+        	JLabel currencyEquityValue = new JLabel(String.format("%.2f",accountEquity));//4
         	currencyEquityLabel.setBounds(47, 30, 130,ComponentConstants.COMPONENT_HEIGHT);
         	currencyEquityValue.setBounds(150,30, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
         	panel.add(currencyEquityLabel);
         	panel.add(currencyEquityValue);
         	
-        	double accountBalance=mt4Util.accountBalance();
     		JLabel accountBalanceLabel=new JLabel("Account Balance: ");//5
-    		JLabel accountBalanceValue = new JLabel(String.format("%.2f",accountBalance));//6
+    		JLabel accountBalanceValue = new JLabel(String.format("%.2f",mt4Util.accountBalance()));//6
     		accountBalanceLabel.setBounds(40, 50, 130,ComponentConstants.COMPONENT_HEIGHT);
     		accountBalanceValue.setBounds(150,50, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(accountBalanceLabel);
     		panel.add(accountBalanceValue);
     		
-    		double totalLotsForNextTrade=accountBalance/(1000/Double.parseDouble(accountConfig.getLotSizeText().getText()));
+    		double totalLotsForNextTrade=accountEquity/(1000/Double.parseDouble(accountConfig.getLotSizeText().getText()));
     		JLabel totalLotsForNextTradeLabel=new JLabel("Total lots next trade:");//7
     		JLabel totalLotsForNextTradeValue = new JLabel(String.format("%.2f",totalLotsForNextTrade));//8
     		totalLotsForNextTradeLabel.setBounds(20, 70, 150,ComponentConstants.COMPONENT_HEIGHT);
@@ -262,13 +262,13 @@ public class DataPanel extends JPanel {
     	MT4ConnectionUtil mt4Util=accountVO.getMt4ConnectionUtil();
     	
     	JLabel accountEquitylabel=(JLabel) panel.getComponent(3);
-		accountEquitylabel.setText(String.format("%.2f",mt4Util.accountEquity()));
+		double accountEquity=mt4Util.accountEquity();
+		accountEquitylabel.setText(String.format("%.2f",accountEquity));
 		
 		JLabel accountBalancelabel=(JLabel) panel.getComponent(5);
-		double accountBalance=mt4Util.accountBalance();
-		accountBalancelabel.setText(String.format("%.2f",accountBalance));
+		accountBalancelabel.setText(String.format("%.2f",mt4Util.accountBalance()));
 		
-		double totalLotsForNextTrade=accountBalance/(1000/Double.parseDouble(accountConfig.getLotSizeText().getText()));
+		double totalLotsForNextTrade=accountEquity/(1000/Double.parseDouble(accountConfig.getLotSizeText().getText()));
 		JLabel totalLotsForNextTradeLabel=(JLabel) panel.getComponent(7);
 		totalLotsForNextTradeLabel.setText(String.format("%.2f",totalLotsForNextTrade));
 		
