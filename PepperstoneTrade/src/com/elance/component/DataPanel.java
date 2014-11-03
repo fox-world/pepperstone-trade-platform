@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import com.elance.nj4x.MT4ConnectionUtil;
+import com.elance.util.OrderUtil;
 import com.elance.util.constants.ComponentConstants;
 import com.elance.vo.AccountConfig;
 import com.elance.vo.AccountVO;
@@ -201,6 +202,7 @@ public class DataPanel extends JPanel {
     			cells[i][8]=orderInfo.getProfit();
     			
     		}
+    		OrderUtil.quickSort(cells, 0, availableOrdersCount-1);
     		openTradeLotsValue.setText(String.format("%.2f",totalLots));
     		JTable jTable=new JTable(cells,columnNames);
     		jTable.setPreferredScrollableViewportSize(new Dimension(750, 360));
@@ -304,6 +306,7 @@ public class DataPanel extends JPanel {
  			cells[i][8]=orderInfo.getProfit();
  			
  		}
+ 		OrderUtil.quickSort(cells, 0, availableOrdersCount-1);
  		JTable jTable=new JTable(cells,columnNames);
  		jTable.setPreferredScrollableViewportSize(new Dimension(750, 360));
  		this.setJTableColumnWidth(jTable);
