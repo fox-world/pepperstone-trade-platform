@@ -14,6 +14,8 @@ public class AccountVO {
 	private boolean loginResult;
 	private String errorMessage;
 	private Date connectTime;
+	private double totalLotsForNextTrade;
+	
 	private MT4ConnectionUtil mt4ConnectionUtil;
 	
 	public AccountVO(){
@@ -81,5 +83,12 @@ public class AccountVO {
 	public void setMt4ConnectionUtil(MT4ConnectionUtil mt4ConnectionUtil) {
 		this.mt4ConnectionUtil = mt4ConnectionUtil;
 	}
-	
+
+	public double getTotalLotsForNextTrade() {
+		return totalLotsForNextTrade;
+	}
+
+	public void setTotalLotsForNextTrade(double totalLotsForNextTrade) {
+		this.totalLotsForNextTrade = totalLotsForNextTrade;
+	}
 }

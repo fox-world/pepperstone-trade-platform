@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -19,9 +20,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import com.elance.listener.OrderListener;
 import com.elance.nj4x.MT4ConnectionUtil;
 import com.elance.util.OrderUtil;
 import com.elance.util.constants.ComponentConstants;
+import com.elance.util.constants.OrderAction;
 import com.elance.vo.AccountConfig;
 import com.elance.vo.AccountVO;
 import com.jfx.SelectionPool;
@@ -89,10 +92,12 @@ public class DataPanel extends JPanel {
         
         JButton openBuyButton=new JButton("Open Buy");
         openBuyButton.setBounds(2, 5, 100, 25);
+        openBuyButton.addActionListener(new OrderListener(OrderAction.OPEN_BUY,accountList,accountConfig));
         buttonPanel.add(openBuyButton);
         
         JButton openSellButton=new JButton("Open Sell");
         openSellButton.setBounds(110, 5, 100, 25);
+        openSellButton.addActionListener(new OrderListener(OrderAction.OPEN_SELL,accountList,accountConfig));
         buttonPanel.add(openSellButton);
         
         JButton closeButton=new JButton("Close");
@@ -154,8 +159,10 @@ public class DataPanel extends JPanel {
     		panel.add(accountBalanceValue);
     		
     		double totalLotsForNextTrade=accountEquity/(1000/Double.parseDouble(accountConfig.getLotSizeText().getText()));
+    		totalLotsForNextTrade=new BigDecimal(totalLotsForNextTrade).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     		JLabel totalLotsForNextTradeLabel=new JLabel("Total lots next trade:");//7
     		JLabel totalLotsForNextTradeValue = new JLabel(String.format("%.2f",totalLotsForNextTrade));//8
+     		accountVO.setTotalLotsForNextTrade(totalLotsForNextTrade);
     		totalLotsForNextTradeLabel.setBounds(20, 70, 150,ComponentConstants.COMPONENT_HEIGHT);
     		totalLotsForNextTradeValue.setBounds(150,70, ComponentConstants.COMPONENT_LABEL_WIDTH_MEDIUM,ComponentConstants.COMPONENT_HEIGHT);
     		panel.add(totalLotsForNextTradeLabel);
@@ -271,6 +278,8 @@ public class DataPanel extends JPanel {
 		accountBalancelabel.setText(String.format("%.2f",mt4Util.accountBalance()));
 		
 		double totalLotsForNextTrade=accountEquity/(1000/Double.parseDouble(accountConfig.getLotSizeText().getText()));
+		totalLotsForNextTrade=new BigDecimal(totalLotsForNextTrade).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		accountVO.setTotalLotsForNextTrade(totalLotsForNextTrade);
 		JLabel totalLotsForNextTradeLabel=(JLabel) panel.getComponent(7);
 		totalLotsForNextTradeLabel.setText(String.format("%.2f",totalLotsForNextTrade));
 		

@@ -1,6 +1,34 @@
 package com.elance.util;
 
+import java.math.BigDecimal;
+
 public class OrderUtil {
+	
+	
+	public static double[] calculateOrderLots(double totalLots,double maxLots) {
+		double tempLots=0;
+		int num=0;
+		while(true){
+			if(tempLots>totalLots){
+				break;
+			}else{
+				num++;
+				tempLots=num*maxLots;
+			}
+		}
+		
+		double[] arrs=new double[num];
+		for(int i=0;i<num;i++){
+			if(i==(num-1)){
+				BigDecimal totalLotsBig=new BigDecimal(Double.toString(maxLots)).multiply(new BigDecimal(i));
+		    	arrs[i]=new BigDecimal(Double.toString(totalLots)).subtract(totalLotsBig).doubleValue();
+			}else{
+				arrs[i]=maxLots;
+			}
+		}
+		
+		return arrs;
+	}
 	
 	public static void quickSort(Object[][] array,int start,int end) 
 	{ 
