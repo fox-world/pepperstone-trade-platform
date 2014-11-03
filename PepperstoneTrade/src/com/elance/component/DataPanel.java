@@ -27,6 +27,7 @@ import com.elance.util.constants.ComponentConstants;
 import com.elance.util.constants.OrderAction;
 import com.elance.vo.AccountConfig;
 import com.elance.vo.AccountVO;
+import com.elance.vo.ButtonStatusVO;
 import com.jfx.SelectionPool;
 import com.jfx.SelectionType;
 import com.jfx.strategy.OrderInfo;
@@ -40,6 +41,7 @@ public class DataPanel extends JPanel {
 	
 	private List<AccountVO> accountList;
 	private AccountConfig accountConfig;
+	private ButtonStatusVO buttonStatusVO;
 	
 	public DataPanel(){
 	}
@@ -47,6 +49,7 @@ public class DataPanel extends JPanel {
 	public DataPanel(List<AccountVO> accountList,AccountConfig accountConfig){
 		this.accountList=accountList;
 		this.accountConfig=accountConfig;
+		buttonStatusVO=new ButtonStatusVO();
 	}
 
 	public void initTabPanel() {
@@ -92,16 +95,17 @@ public class DataPanel extends JPanel {
         
         JButton openBuyButton=new JButton("Open Buy");
         openBuyButton.setBounds(2, 5, 100, 25);
-        openBuyButton.addActionListener(new OrderListener(OrderAction.OPEN_BUY,accountList,accountConfig));
+        openBuyButton.addActionListener(new OrderListener(OrderAction.OPEN_BUY,accountList,accountConfig,buttonStatusVO));
         buttonPanel.add(openBuyButton);
         
         JButton openSellButton=new JButton("Open Sell");
         openSellButton.setBounds(110, 5, 100, 25);
-        openSellButton.addActionListener(new OrderListener(OrderAction.OPEN_SELL,accountList,accountConfig));
+        openSellButton.addActionListener(new OrderListener(OrderAction.OPEN_SELL,accountList,accountConfig,buttonStatusVO));
         buttonPanel.add(openSellButton);
         
         JButton closeButton=new JButton("Close");
         closeButton.setBounds(218, 5, 100, 25);
+        closeButton.addActionListener(new OrderListener(OrderAction.CLOSE,accountList,accountConfig,buttonStatusVO));
         buttonPanel.add(closeButton);
         
         JButton hedgeButton=new JButton("Hedge");
@@ -119,7 +123,7 @@ public class DataPanel extends JPanel {
         //The following line enables to use scrolling tabs.
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT); 
         
-        updateTabContent(tabbedPane,accountList,accountConfig);
+        updateTabContent(tabbedPane,accountList,accountConfig,buttonStatusVO);
     }
     
     protected JPanel makeTextPanel(AccountVO accountVO,AccountConfig accountConfig) {
@@ -250,15 +254,17 @@ public class DataPanel extends JPanel {
         return panel;
     }
     
-    public void updateTabContent(JTabbedPane tabbedPane,List<AccountVO> accountList,AccountConfig accountConfig){
+    public void updateTabContent(JTabbedPane tabbedPane,List<AccountVO> accountList,AccountConfig accountConfig,ButtonStatusVO buttonStatusVO){
     	try {
     		int selectedIndex=0;
     		AccountVO accountVO=null;
     		while(true){
-    			selectedIndex=tabbedPane.getSelectedIndex();
-    			accountVO=accountList.get(selectedIndex);
-    			JPanel panel=(JPanel) tabbedPane.getSelectedComponent();
-    			updateTabeContent(panel, accountVO,accountConfig);
+    			if(!buttonStatusVO.isCloseOrder()){
+    				selectedIndex=tabbedPane.getSelectedIndex();
+        			accountVO=accountList.get(selectedIndex);
+        			JPanel panel=(JPanel) tabbedPane.getSelectedComponent();
+        			updateTabeContent(panel, accountVO,accountConfig);	
+    			}
     			Thread.sleep(1000);	
     		}
 		} catch (InterruptedException e) {

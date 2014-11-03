@@ -9,6 +9,7 @@ import com.elance.util.OrderUtil;
 import com.elance.util.constants.OrderAction;
 import com.elance.vo.AccountConfig;
 import com.elance.vo.AccountVO;
+import com.elance.vo.ButtonStatusVO;
 import com.jfx.ErrAccountDisabled;
 import com.jfx.ErrCommonError;
 import com.jfx.ErrCustomIndicatorError;
@@ -18,6 +19,7 @@ import com.jfx.ErrInvalidFunctionParamvalue;
 import com.jfx.ErrInvalidPrice;
 import com.jfx.ErrInvalidPriceParam;
 import com.jfx.ErrInvalidStops;
+import com.jfx.ErrInvalidTicket;
 import com.jfx.ErrInvalidTradeParameters;
 import com.jfx.ErrInvalidTradeVolume;
 import com.jfx.ErrLongPositionsOnlyAllowed;
@@ -47,21 +49,26 @@ import com.jfx.ErrTradeTimeout4;
 import com.jfx.ErrTradeTooManyOrders;
 import com.jfx.ErrUnknownSymbol;
 import com.jfx.MarketInfo;
+import com.jfx.SelectionPool;
+import com.jfx.SelectionType;
 import com.jfx.TradeOperation;
+import com.jfx.strategy.OrderInfo;
 
 public class OrderListener implements ActionListener {
 	
 	private OrderAction orderAction;
 	private List<AccountVO> accountList;
 	private AccountConfig accountConfig;
+	private ButtonStatusVO buttonStatusVO;
 	
 	public OrderListener(){
 	}
 	
-	public OrderListener(OrderAction orderAction,List<AccountVO> accountList,AccountConfig accountConfig){
+	public OrderListener(OrderAction orderAction,List<AccountVO> accountList,AccountConfig accountConfig,ButtonStatusVO buttonStatusVO){
 		this.orderAction=orderAction;
 		this.accountList=accountList;
 		this.accountConfig=accountConfig;
+		this.buttonStatusVO=buttonStatusVO;
 	}
 
 	@Override
@@ -82,40 +89,85 @@ public class OrderListener implements ActionListener {
     	  double[] lots=OrderUtil.calculateOrderLots(accountVO.getTotalLotsForNextTrade(),Double.valueOf(maxLotsStr));
 		  int maxTradeLots=Integer.parseInt(accountConfig.getMaxTradesSpinner().getValue().toString());
 		  int num=0;
-    	  try {
-				for (double tradeLot : lots) {
-					
-					num++;
-					if(num>maxTradeLots){
-						continue;
+		  if(orderAction==OrderAction.CLOSE){
+			  buttonStatusVO.setCloseOrder(true);
+			  closeAccountOrders(accountVO, maxTradeLots);
+			  buttonStatusVO.setCloseOrder(false);
+		  }else{
+			  try {
+					for (double tradeLot : lots) {
+						
+						num++;
+						if(num>maxTradeLots){
+							continue;
+						}
+						
+						if(orderAction==OrderAction.OPEN_BUY){
+							mt4Util.orderSend(symbol, TradeOperation.OP_BUY, tradeLot,mt4Util.marketInfo(symbol, MarketInfo.MODE_ASK), 10, 0,0, null, 0, null);
+						}else if(orderAction==OrderAction.OPEN_SELL){
+							mt4Util.orderSend(symbol, TradeOperation.OP_SELL, tradeLot,mt4Util.marketInfo(symbol, MarketInfo.MODE_BID), 10, 0,0, null, 0, null);
+						}
+				
 					}
-					
-					if(orderAction==OrderAction.OPEN_BUY){
-						mt4Util.orderSend(symbol, TradeOperation.OP_BUY, tradeLot,mt4Util.marketInfo(symbol, MarketInfo.MODE_ASK), 10, 0,0, null, 0, null);
-					}else if(orderAction==OrderAction.OPEN_SELL){
-						mt4Util.orderSend(symbol, TradeOperation.OP_SELL, tradeLot,mt4Util.marketInfo(symbol, MarketInfo.MODE_BID), 10, 0,0, null, 0, null);
-					}
-			
+				} catch (ErrInvalidFunctionParamvalue | ErrCustomIndicatorError
+						| ErrStringParameterExpected | ErrIntegerParameterExpected
+						| ErrUnknownSymbol | ErrInvalidPriceParam
+						| ErrTradeNotAllowed | ErrLongsNotAllowed
+						| ErrShortsNotAllowed | ErrCommonError
+						| ErrInvalidTradeParameters | ErrServerBusy | ErrOldVersion
+						| ErrNoConnection | ErrTooFrequentRequests
+						| ErrAccountDisabled | ErrInvalidAccount | ErrTradeTimeout
+						| ErrInvalidPrice | ErrInvalidStops | ErrInvalidTradeVolume
+						| ErrMarketClosed | ErrTradeDisabled | ErrNotEnoughMoney
+						| ErrPriceChanged | ErrOffQuotes | ErrRequote
+						| ErrOrderLocked | ErrLongPositionsOnlyAllowed
+						| ErrTooManyRequests | ErrTradeTimeout2 | ErrTradeTimeout3
+						| ErrTradeTimeout4 | ErrTradeModifyDenied
+						| ErrTradeContextBusy | ErrTradeExpirationDenied
+						| ErrTradeTooManyOrders ex) {
+					ex.printStackTrace();
 				}
-			} catch (ErrInvalidFunctionParamvalue | ErrCustomIndicatorError
-					| ErrStringParameterExpected | ErrIntegerParameterExpected
-					| ErrUnknownSymbol | ErrInvalidPriceParam
-					| ErrTradeNotAllowed | ErrLongsNotAllowed
-					| ErrShortsNotAllowed | ErrCommonError
-					| ErrInvalidTradeParameters | ErrServerBusy | ErrOldVersion
-					| ErrNoConnection | ErrTooFrequentRequests
-					| ErrAccountDisabled | ErrInvalidAccount | ErrTradeTimeout
-					| ErrInvalidPrice | ErrInvalidStops | ErrInvalidTradeVolume
-					| ErrMarketClosed | ErrTradeDisabled | ErrNotEnoughMoney
-					| ErrPriceChanged | ErrOffQuotes | ErrRequote
-					| ErrOrderLocked | ErrLongPositionsOnlyAllowed
-					| ErrTooManyRequests | ErrTradeTimeout2 | ErrTradeTimeout3
-					| ErrTradeTimeout4 | ErrTradeModifyDenied
-					| ErrTradeContextBusy | ErrTradeExpirationDenied
-					| ErrTradeTooManyOrders ex) {
-				ex.printStackTrace();
-			}
+		  }
+    	  
       }   
+	}
+	
+	public void closeAccountOrders(AccountVO accountVO,int maxTradeLots) {
+		
+		MT4ConnectionUtil mt4Util=accountVO.getMt4ConnectionUtil();
+		int availableOrdersCount=mt4Util.ordersTotal();
+		
+		OrderInfo orderInfo=null;
+		try {
+			if(availableOrdersCount>maxTradeLots){
+				return;
+			}
+//			for(int i=0;i<availableOrdersCount;i++){
+//				orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
+//				mt4Util.orderClose(orderInfo.ticket(),orderInfo.getLots(),0, 0, 0);
+//				availableOrdersCount=mt4Util.ordersTotal();
+//				i--;
+//			}
+			orderInfo =mt4Util.orderGet(0, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
+			while(orderInfo!=null){
+				mt4Util.orderClose(orderInfo.ticket(),orderInfo.getLots(),0, 0, 0);
+				orderInfo=mt4Util.orderGet(0, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
+			}
+		} catch (ErrCustomIndicatorError | ErrIntegerParameterExpected
+				| ErrInvalidFunctionParamvalue | ErrInvalidPriceParam
+				| ErrInvalidTicket | ErrUnknownSymbol | ErrTradeNotAllowed
+				| ErrCommonError | ErrInvalidTradeParameters | ErrServerBusy
+				| ErrOldVersion | ErrNoConnection | ErrTooFrequentRequests
+				| ErrAccountDisabled | ErrInvalidAccount | ErrTradeTimeout
+				| ErrInvalidPrice | ErrInvalidStops | ErrInvalidTradeVolume
+				| ErrMarketClosed | ErrTradeDisabled | ErrNotEnoughMoney
+				| ErrPriceChanged | ErrOffQuotes | ErrRequote | ErrOrderLocked
+				| ErrLongPositionsOnlyAllowed | ErrTooManyRequests
+				| ErrTradeTimeout2 | ErrTradeTimeout3 | ErrTradeTimeout4
+				| ErrTradeModifyDenied | ErrTradeContextBusy
+				| ErrTradeExpirationDenied | ErrTradeTooManyOrders e) {
+			e.printStackTrace();
+		}
 	}
 
 }
