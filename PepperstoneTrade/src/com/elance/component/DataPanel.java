@@ -191,26 +191,27 @@ public class DataPanel extends JPanel {
     	    panel.add(currencyPairsLabel);
     		
     	    JPanel tablePanel=new JPanel();//12
-    	    String[] columnNames={"Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
+    	    String[] columnNames={"","Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
     	    DateFormat format=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
     		int availableOrdersCount=mt4Util.ordersTotal();
-    		Object[][] cells=new Object[availableOrdersCount][9];
+    		Object[][] cells=new Object[availableOrdersCount][10];
     		OrderInfo orderInfo=null;
     		double totalLots=0;
     		double lots=0;
     		for(int i=0;i<availableOrdersCount;i++){
     			orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
-    			cells[i][0]=orderInfo.ticket();
-    			cells[i][1]=format.format(orderInfo.getOpenTime());
-    			cells[i][2]=orderInfo.getType();
+    			cells[i][0]=i+1;
+    			cells[i][1]=orderInfo.ticket();
+    			cells[i][2]=format.format(orderInfo.getOpenTime());
+    			cells[i][3]=orderInfo.getType();
     			lots=orderInfo.getLots();
     			totalLots+=lots;
-    			cells[i][3]=lots;
-    			cells[i][4]=orderInfo.getSymbol();
-    			cells[i][5]=orderInfo.getOpenPrice();
-    			cells[i][6]=orderInfo.getCommission();
-    			cells[i][7]=orderInfo.getSwap();
-    			cells[i][8]=orderInfo.getProfit();
+    			cells[i][4]=lots;
+    			cells[i][5]=orderInfo.getSymbol();
+    			cells[i][6]=orderInfo.getOpenPrice();
+    			cells[i][7]=orderInfo.getCommission();
+    			cells[i][8]=orderInfo.getSwap();
+    			cells[i][9]=orderInfo.getProfit();
     			
     		}
     		OrderUtil.quickSort(cells, 0, availableOrdersCount-1);
@@ -299,26 +300,27 @@ public class DataPanel extends JPanel {
 		accountFreeMarginlabel.setText(String.format("%.2f",mt4Util.accountFreeMargin()));
 		
 		JPanel tablePanel=(JPanel) panel.getComponent(12);
-		 String[] columnNames={"Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
+		 String[] columnNames={"","Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
  	    DateFormat format=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
  		int availableOrdersCount=mt4Util.ordersTotal();
- 		Object[][] cells=new Object[availableOrdersCount][9];
+ 		Object[][] cells=new Object[availableOrdersCount][10];
  		OrderInfo orderInfo=null;
  		double totalLots=0;
 		double lots=0;
  		for(int i=0;i<availableOrdersCount;i++){
  			orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
- 			cells[i][0]=orderInfo.ticket();
- 			cells[i][1]=format.format(orderInfo.getOpenTime());
- 			cells[i][2]=orderInfo.getType();
+ 			cells[i][0]=i+1;
+ 			cells[i][1]=orderInfo.ticket();
+ 			cells[i][2]=format.format(orderInfo.getOpenTime());
+ 			cells[i][3]=orderInfo.getType();
  			lots=orderInfo.getLots();
  			totalLots+=lots;
- 			cells[i][3]=lots;
- 			cells[i][4]=orderInfo.getSymbol();
- 			cells[i][5]=orderInfo.getOpenPrice();
- 			cells[i][6]=orderInfo.getCommission();
- 			cells[i][7]=orderInfo.getSwap();
- 			cells[i][8]=orderInfo.getProfit();
+ 			cells[i][4]=lots;
+ 			cells[i][5]=orderInfo.getSymbol();
+ 			cells[i][6]=orderInfo.getOpenPrice();
+ 			cells[i][7]=orderInfo.getCommission();
+ 			cells[i][8]=orderInfo.getSwap();
+ 			cells[i][9]=orderInfo.getProfit();
  			
  		}
  		OrderUtil.quickSort(cells, 0, availableOrdersCount-1);
@@ -342,19 +344,21 @@ public class DataPanel extends JPanel {
 		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 		jTable.getColumnModel().getColumn(0).setCellRenderer(rightRenderer);
-		jTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		jTable.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
 		jTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-		jTable.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
-		jTable.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-		jTable.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
+		jTable.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+		jTable.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+		jTable.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
 		jTable.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
 		jTable.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
 		jTable.getColumnModel().getColumn(8).setCellRenderer(rightRenderer);
+		jTable.getColumnModel().getColumn(9).setCellRenderer(rightRenderer);
 		
-		jTable.getColumnModel().getColumn(0).setPreferredWidth(60);
-		jTable.getColumnModel().getColumn(1).setPreferredWidth(140);
-		jTable.getColumnModel().getColumn(2).setPreferredWidth(55);
-		jTable.getColumnModel().getColumn(8).setPreferredWidth(120);
+		jTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+		jTable.getColumnModel().getColumn(1).setPreferredWidth(60);
+		jTable.getColumnModel().getColumn(2).setPreferredWidth(140);
+		jTable.getColumnModel().getColumn(3).setPreferredWidth(45);
+		jTable.getColumnModel().getColumn(9).setPreferredWidth(100);
     }
     
 }
