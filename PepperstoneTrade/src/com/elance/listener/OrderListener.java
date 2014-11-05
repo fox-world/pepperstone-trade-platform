@@ -2,6 +2,7 @@ package com.elance.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.elance.nj4x.MT4ConnectionUtil;
@@ -139,19 +140,18 @@ public class OrderListener implements ActionListener {
 		
 		OrderInfo orderInfo=null;
 		try {
-			if(availableOrdersCount>maxTradeLots){
+			List<OrderInfo> orderList=new ArrayList<OrderInfo>();
+			for(int i=0;i<availableOrdersCount;i++){
+				orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
+		        if(orderInfo.getType()==TradeOperation.OP_BUY||orderInfo.getType()==TradeOperation.OP_SELL){
+		        	orderList.add(orderInfo);
+		        }
+			}
+			if(orderList.size()>maxTradeLots){
 				return;
 			}
-//			for(int i=0;i<availableOrdersCount;i++){
-//				orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
-//				mt4Util.orderClose(orderInfo.ticket(),orderInfo.getLots(),0, 0, 0);
-//				availableOrdersCount=mt4Util.ordersTotal();
-//				i--;
-//			}
-			orderInfo =mt4Util.orderGet(0, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
-			while(orderInfo!=null){
-				mt4Util.orderClose(orderInfo.ticket(),orderInfo.getLots(),0, 0, 0);
-				orderInfo=mt4Util.orderGet(0, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
+			for(OrderInfo order:orderList){
+				mt4Util.orderClose(order.ticket(),order.getLots(),0, 0, 0);
 			}
 		} catch (ErrCustomIndicatorError | ErrIntegerParameterExpected
 				| ErrInvalidFunctionParamvalue | ErrInvalidPriceParam
