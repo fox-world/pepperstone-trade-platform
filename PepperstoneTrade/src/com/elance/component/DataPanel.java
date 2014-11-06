@@ -260,7 +260,7 @@ public class DataPanel extends JPanel {
     		int selectedIndex=0;
     		AccountVO accountVO=null;
     		while(true){
-    			if(!buttonStatusVO.isCloseOrder()){
+    			if(!buttonStatusVO.needStopUpdate()){
     				selectedIndex=tabbedPane.getSelectedIndex();
         			accountVO=accountList.get(selectedIndex);
         			JPanel panel=(JPanel) tabbedPane.getSelectedComponent();
