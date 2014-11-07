@@ -3,8 +3,16 @@ package com.elance.vo;
 import javax.swing.ButtonGroup;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AccountConfig {
+
+	public final ExecutorService executorService;
+
+	public AccountConfig() {
+		executorService = Executors.newCachedThreadPool();
+	}
 
 	private JSpinner maxLotsSpinner;
 	private JSpinner maxTradesSpinner;
