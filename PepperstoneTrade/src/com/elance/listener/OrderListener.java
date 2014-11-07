@@ -83,6 +83,10 @@ public class OrderListener implements ActionListener {
     		  continue;
     	  }
     	  
+    	  if(!accountVO.isLoginSuccess()){
+    		  continue;
+    	  }
+    	  
     	  String maxLotsStr=accountConfig.getMaxLotsSpinner().getValue().toString();
     	  MT4ConnectionUtil mt4Util=accountVO.getMt4ConnectionUtil();
     	  String symbol=mt4Util.getSymbol();
@@ -151,6 +155,7 @@ public class OrderListener implements ActionListener {
 				return;
 			}
 			for(OrderInfo order:orderList){
+				System.out.println("======close order:\t"+order.ticket());
 				mt4Util.orderClose(order.ticket(),order.getLots(),0, 0, 0);
 			}
 		} catch (ErrCustomIndicatorError | ErrIntegerParameterExpected

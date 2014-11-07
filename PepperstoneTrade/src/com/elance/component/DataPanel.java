@@ -82,7 +82,7 @@ public class DataPanel extends JPanel {
             account=accountVO.getAccountText().getText();
         	panel = makeTextPanel(accountVO,accountConfig);
             tabbedPane.addTab(account, null, panel,"Data of "+account);
-            if(accountVO.isLoginResult()){
+            if(accountVO.isLoginSuccess()){
             	tabbedPane.setForegroundAt(index,Color.BLUE);
             }else{
             	tabbedPane.setForegroundAt(index,Color.RED);
@@ -130,7 +130,7 @@ public class DataPanel extends JPanel {
     	
     	JPanel panel = new JPanel(false);
     	
-    	boolean loginSuccess=accountVO.isLoginResult();
+    	boolean loginSuccess=accountVO.isLoginSuccess();
     	String tabContent=null;
     	
     	if(loginSuccess){
@@ -263,8 +263,10 @@ public class DataPanel extends JPanel {
     			if(!buttonStatusVO.needStopUpdate()){
     				selectedIndex=tabbedPane.getSelectedIndex();
         			accountVO=accountList.get(selectedIndex);
-        			JPanel panel=(JPanel) tabbedPane.getSelectedComponent();
-        			updateTabeContent(panel, accountVO,accountConfig);	
+        			if(accountVO.isLoginSuccess()){
+        	  			JPanel panel=(JPanel) tabbedPane.getSelectedComponent();
+            			updateTabeContent(panel, accountVO,accountConfig);	
+        			}
     			}
     			Thread.sleep(1000);	
     		}
