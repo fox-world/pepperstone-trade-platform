@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -42,7 +43,8 @@ public class DataPanel extends JPanel {
 	private List<AccountVO> accountList;
 	private AccountConfig accountConfig;
 	private ButtonStatusVO buttonStatusVO;
-	
+	private ArrayList<OrderInfo> lastUpdatedOrders = null;
+
 	public DataPanel(){
 	}
 	
@@ -82,7 +84,7 @@ public class DataPanel extends JPanel {
             account=accountVO.getAccountText().getText();
         	panel = makeTextPanel(accountVO,accountConfig);
             tabbedPane.addTab(account, null, panel,"Data of "+account);
-            if(accountVO.isLoginSuccess()){
+            if(accountVO.isLoginResult()){
             	tabbedPane.setForegroundAt(index,Color.BLUE);
             }else{
             	tabbedPane.setForegroundAt(index,Color.RED);
@@ -130,7 +132,7 @@ public class DataPanel extends JPanel {
     	
     	JPanel panel = new JPanel(false);
     	
-    	boolean loginSuccess=accountVO.isLoginSuccess();
+    	boolean loginSuccess=accountVO.isLoginResult();
     	String tabContent=null;
     	
     	if(loginSuccess){
@@ -193,13 +195,14 @@ public class DataPanel extends JPanel {
     	    JPanel tablePanel=new JPanel();//12
     	    String[] columnNames={"","Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
     	    DateFormat format=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-    		int availableOrdersCount=mt4Util.ordersTotal();
+			ArrayList<OrderInfo> orders = mt4Util.getOrders();
+			int availableOrdersCount=orders.size();
     		Object[][] cells=new Object[availableOrdersCount][10];
     		OrderInfo orderInfo=null;
     		double totalLots=0;
     		double lots=0;
     		for(int i=0;i<availableOrdersCount;i++){
-    			orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
+    			orderInfo =orders.get(i);
     			cells[i][0]=i+1;
     			cells[i][1]=orderInfo.ticket();
     			cells[i][2]=format.format(orderInfo.getOpenTime());
@@ -263,10 +266,8 @@ public class DataPanel extends JPanel {
     			if(!buttonStatusVO.needStopUpdate()){
     				selectedIndex=tabbedPane.getSelectedIndex();
         			accountVO=accountList.get(selectedIndex);
-        			if(accountVO.isLoginSuccess()){
-        	  			JPanel panel=(JPanel) tabbedPane.getSelectedComponent();
-            			updateTabeContent(panel, accountVO,accountConfig);	
-        			}
+        			JPanel panel=(JPanel) tabbedPane.getSelectedComponent();
+        			updateTabeContent(panel, accountVO,accountConfig);	
     			}
     			Thread.sleep(1000);	
     		}
@@ -278,7 +279,8 @@ public class DataPanel extends JPanel {
     public void updateTabeContent(JPanel panel,AccountVO accountVO,AccountConfig accountConfig){
     	
     	MT4ConnectionUtil mt4Util=accountVO.getMt4ConnectionUtil();
-    	
+		ArrayList<OrderInfo> orders = mt4Util.getOrders();
+
     	JLabel accountEquitylabel=(JLabel) panel.getComponent(3);
 		double accountEquity=mt4Util.accountEquity();
 		accountEquitylabel.setText(String.format("%.2f",accountEquity));
@@ -300,42 +302,43 @@ public class DataPanel extends JPanel {
 		
 		JLabel accountFreeMarginlabel=(JLabel) panel.getComponent(18);
 		accountFreeMarginlabel.setText(String.format("%.2f",mt4Util.accountFreeMargin()));
-		
-		JPanel tablePanel=(JPanel) panel.getComponent(12);
-		 String[] columnNames={"","Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
- 	    DateFormat format=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
- 		int availableOrdersCount=mt4Util.ordersTotal();
- 		Object[][] cells=new Object[availableOrdersCount][10];
- 		OrderInfo orderInfo=null;
- 		double totalLots=0;
-		double lots=0;
- 		for(int i=0;i<availableOrdersCount;i++){
- 			orderInfo =mt4Util.orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);
- 			cells[i][0]=i+1;
- 			cells[i][1]=orderInfo.ticket();
- 			cells[i][2]=format.format(orderInfo.getOpenTime());
- 			cells[i][3]=orderInfo.getType();
- 			lots=orderInfo.getLots();
- 			totalLots+=lots;
- 			cells[i][4]=lots;
- 			cells[i][5]=orderInfo.getSymbol();
- 			cells[i][6]=orderInfo.getOpenPrice();
- 			cells[i][7]=orderInfo.getCommission();
- 			cells[i][8]=orderInfo.getSwap();
- 			cells[i][9]=orderInfo.getProfit();
- 			
- 		}
- 		OrderUtil.quickSort(cells, 0, availableOrdersCount-1);
- 		JTable jTable=new JTable(cells,columnNames);
- 		jTable.setPreferredScrollableViewportSize(new Dimension(750, 360));
- 		this.setJTableColumnWidth(jTable);
- 		JScrollPane sPane=new JScrollPane(jTable);
- 		tablePanel.remove(0);
- 		tablePanel.add(sPane);
- 		
- 		JLabel openTradeLotsLabel=(JLabel) panel.getComponent(9);
- 		openTradeLotsLabel.setText(String.format("%.2f",totalLots));
-		
+
+		if (lastUpdatedOrders != orders) {
+			lastUpdatedOrders = orders;
+			JPanel tablePanel=(JPanel) panel.getComponent(12);
+			String[] columnNames={"","Order","Time","Type","Size","Symbol","Price","Commission","Swap","Profit"};
+			DateFormat format=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+			int availableOrdersCount=orders.size();
+			Object[][] cells=new Object[availableOrdersCount][10];
+			OrderInfo orderInfo=null;
+			double totalLots=0;
+			double lots=0;
+			for(int i=0;i<availableOrdersCount;i++){
+				orderInfo =orders.get(i);
+				cells[i][0]=i+1;
+				cells[i][1]=orderInfo.ticket();
+				cells[i][2]=format.format(orderInfo.getOpenTime());
+				cells[i][3]=orderInfo.getType();
+				lots=orderInfo.getLots();
+				totalLots+=lots;
+				cells[i][4]=lots;
+				cells[i][5]=orderInfo.getSymbol();
+				cells[i][6]=orderInfo.getOpenPrice();
+				cells[i][7]=orderInfo.getCommission();
+				cells[i][8]=orderInfo.getSwap();
+				cells[i][9]=orderInfo.getProfit();
+
+			}
+			OrderUtil.quickSort(cells, 0, availableOrdersCount-1);
+			JTable jTable=new JTable(cells,columnNames);
+			jTable.setPreferredScrollableViewportSize(new Dimension(750, 360));
+			this.setJTableColumnWidth(jTable);
+			JScrollPane sPane=new JScrollPane(jTable);
+			tablePanel.remove(0);
+			tablePanel.add(sPane);
+			JLabel openTradeLotsLabel=(JLabel) panel.getComponent(9);
+			openTradeLotsLabel.setText(String.format("%.2f", totalLots));
+		}
     }
     
     public void setJTableColumnWidth(JTable jTable){

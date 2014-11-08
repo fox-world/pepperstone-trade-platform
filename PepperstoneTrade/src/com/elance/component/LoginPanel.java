@@ -153,10 +153,10 @@ public class LoginPanel extends JPanel{
 		loginButton.setBounds(310,10, 80, ComponentConstants.BUTTON_HEIGHT);
 		buttonPanel.add(loginButton);
 		accountList.clear();
-		accountList.add(new AccountVO(accountText1,passwordText1,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText2,passwordText2,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText3,passwordText3,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText4,passwordText4,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText1,passwordText1,new MT4ConnectionUtil(1)));
+		accountList.add(new AccountVO(accountText2,passwordText2,new MT4ConnectionUtil(2)));
+		accountList.add(new AccountVO(accountText3,passwordText3,new MT4ConnectionUtil(3)));
+		accountList.add(new AccountVO(accountText4,passwordText4,new MT4ConnectionUtil(4)));
 		loginButton.addActionListener(new LoginListener(frame,this,processingLabel,accountList,accountConfig));
 		
 		accountConfig.setMaxLotsSpinner(maxLotsSpinner);
@@ -182,7 +182,7 @@ public class LoginPanel extends JPanel{
 	    });
 	
 	}
-	
+
 	public void addAccountComponents(){
 		//=====================Account 1=================
 				JLabel accountLabel1 = new JLabel("Account1:");	
