@@ -29,8 +29,6 @@ import com.elance.util.constants.OrderAction;
 import com.elance.vo.AccountConfig;
 import com.elance.vo.AccountVO;
 import com.elance.vo.ButtonStatusVO;
-import com.jfx.SelectionPool;
-import com.jfx.SelectionType;
 import com.jfx.strategy.OrderInfo;
 
 public class DataPanel extends JPanel {
@@ -84,7 +82,7 @@ public class DataPanel extends JPanel {
             account=accountVO.getAccountText().getText();
         	panel = makeTextPanel(accountVO,accountConfig);
             tabbedPane.addTab(account, null, panel,"Data of "+account);
-            if(accountVO.isLoginResult()){
+            if(accountVO.isLoginSuccess()){
             	tabbedPane.setForegroundAt(index,Color.BLUE);
             }else{
             	tabbedPane.setForegroundAt(index,Color.RED);
@@ -132,7 +130,7 @@ public class DataPanel extends JPanel {
     	
     	JPanel panel = new JPanel(false);
     	
-    	boolean loginSuccess=accountVO.isLoginResult();
+    	boolean loginSuccess=accountVO.isLoginSuccess();
     	String tabContent=null;
     	
     	if(loginSuccess){

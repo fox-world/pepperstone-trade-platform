@@ -1,23 +1,20 @@
 package com.elance.listener;
 
-import com.elance.nj4x.MT4ConnectionUtil;
-import com.elance.util.OrderUtil;
-import com.elance.util.constants.OrderAction;
-import com.elance.vo.AccountConfig;
-import com.elance.vo.AccountVO;
-import com.elance.vo.ButtonStatusVO;
-import com.jfx.ErrUnknownSymbol;
-import com.jfx.MT4Exception;
-import com.jfx.MarketInfo;
-import com.jfx.TradeOperation;
-import com.jfx.strategy.OrderInfo;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+
+import com.elance.nj4x.MT4ConnectionUtil;
+import com.elance.util.OrderUtil;
+import com.elance.util.constants.OrderAction;
+import com.elance.vo.AccountConfig;
+import com.elance.vo.AccountVO;
+import com.elance.vo.ButtonStatusVO;
+import com.jfx.TradeOperation;
+import com.jfx.strategy.OrderInfo;
 
 public class OrderListener implements ActionListener {
 
@@ -38,13 +35,13 @@ public class OrderListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         synchronized (accountConfig) {
             ExecutorService threadsPool = accountConfig.executorService;
-            ArrayList<Future> jobs = new ArrayList<>();
+            List<Future<?>> jobs = new ArrayList<>();
             for (final AccountVO accountVO : accountList) {
                 System.out.println("=========accountVO:\t" + accountVO.getAccountText().getText() + "\t" + orderAction);
                 if (accountVO.getTotalLotsForNextTrade() == 0.0) {
                     continue;
                 }
-                Future future = threadsPool.submit(new Runnable() {
+                Future<?> future = threadsPool.submit(new Runnable() {
                     @Override
                     public void run() {
                         String maxLotsStr = accountConfig.getMaxLotsSpinner().getValue().toString();
@@ -84,11 +81,11 @@ public class OrderListener implements ActionListener {
         }
     }
 
-    private void waitForJobsToComplete(ArrayList<Future> jobs) {
+    private void waitForJobsToComplete(List<Future<?>> jobs) {
         int doneCount = 0;
         while (doneCount < jobs.size()) {
             doneCount = 0;
-            for (Future f : jobs) {
+            for (Future<?> f : jobs) {
                 if (f.isDone() || f.isCancelled()) {
                     try {
                         f.get(); // can generate exception
@@ -118,10 +115,7 @@ public class OrderListener implements ActionListener {
         long scheduledTime = System.currentTimeMillis();
         mt4Util.waitForAllJobsToComplete();
         long completeTime = System.currentTimeMillis();
-        System.out.printf(
-            "Close jobs have been scheduled in %d millis and completed in %d millis\n",
-            scheduledTime - startTime, completeTime - startTime
-        );
+        System.out.printf("Close jobs have been scheduled in %d millis and completed in %d millis\n", scheduledTime - startTime, completeTime - startTime);
         mt4Util.loadOrders();
     }
 

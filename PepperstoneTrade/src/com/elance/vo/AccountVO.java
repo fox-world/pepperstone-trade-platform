@@ -11,7 +11,7 @@ public class AccountVO {
 
 	private JTextField accountText;
 	private JTextField passwordText;
-	private boolean loginResult;
+	private boolean loginSuccess;
 	private String errorMessage;
 	private Date connectTime;
 	private double totalLotsForNextTrade;
@@ -36,9 +36,9 @@ public class AccountVO {
 		}
 	}
 	
-	public AccountVO(JTextField accountText,JTextField passwordText,boolean loginResult,MT4ConnectionUtil mt4ConnectionUtil){
+	public AccountVO(JTextField accountText,JTextField passwordText,boolean loginSuccess,MT4ConnectionUtil mt4ConnectionUtil){
 		this(accountText,passwordText,mt4ConnectionUtil);
-		this.loginResult=loginResult;
+		this.loginSuccess=loginSuccess;
 	}
 
 	public JTextField getAccountText() {
@@ -57,12 +57,12 @@ public class AccountVO {
 		this.passwordText = passwordText;
 	}
 
-	public boolean isLoginResult() {
-		return loginResult;
+	public boolean isLoginSuccess() {
+		return loginSuccess;
 	}
 
-	public void setLoginResult(boolean loginResult) {
-		this.loginResult = loginResult;
+	public void setLoginSuccess(boolean loginResult) {
+		this.loginSuccess = loginResult;
 	}
     
 	public String getErrorMessage() {

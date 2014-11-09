@@ -1,11 +1,5 @@
 package com.elance.nj4x;
 
-import com.jfx.*;
-import com.jfx.net.JFXServer;
-import com.jfx.strategy.OrderInfo;
-import com.jfx.strategy.Strategy;
-import com.jfx.strategy.StrategyRunner;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +7,22 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import com.jfx.ErrUnknownSymbol;
+import com.jfx.MT4;
+import com.jfx.SelectionPool;
+import com.jfx.SelectionType;
+import com.jfx.Tick;
+import com.jfx.TradeOperation;
+import com.jfx.net.JFXServer;
+import com.jfx.strategy.OrderInfo;
+import com.jfx.strategy.Strategy;
+import com.jfx.strategy.StrategyRunner;
 
 public class MT4ConnectionUtil extends Strategy {
     private int accNo;
@@ -115,7 +124,8 @@ public class MT4ConnectionUtil extends Strategy {
         orders = ordersSnapshot;
     }
 
-    public Future<Long> orderSendAsynchronously(final String symbol, final TradeOperation cmd, final double volume, final double price, final int slippage, final double stoploss, final double takeprofit, final String comment, final int magic, final Date expiration) {
+    public Future<Long> orderSendAsynchronously(final String symbol, final TradeOperation cmd, final double volume, final double price, 
+    		final int slippage, final double stoploss, final double takeprofit, final String comment, final int magic, final Date expiration) {
         Future<Long> future = threadPool.submit(new Callable<Long>() {
             @Override
             public Long call() throws Exception {

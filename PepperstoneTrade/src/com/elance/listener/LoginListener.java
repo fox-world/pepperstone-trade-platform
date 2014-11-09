@@ -86,7 +86,7 @@ public class LoginListener implements ActionListener {
                         accountVO.setErrorMessage("<html>Account " + account + " login failed,reason:<br/>" + e.getMessage() + "</html>");
                         System.out.println("************" + account + " login failed,error message " + e.getMessage());
                     }
-                    accountVO.setLoginResult(loginResult);
+                    accountVO.setLoginSuccess(loginResult);
                     if (loginResult) {
                         System.out.println("==========" + account + " login success!");
                         accountVO.setConnectTime(new Date());
