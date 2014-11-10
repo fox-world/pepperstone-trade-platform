@@ -10,7 +10,7 @@ import com.jfx.Broker;
  */
 public class BrokerConfig {
 
-    public static final String JFX_ACTIVATION_KEY = "2082621138"; // input your active key here
+    public static final String JFX_ACTIVATION_KEY = "974274799"; // input your active key here
 
     public static final Broker MT_4_SERVER = new Broker("MIGBank-Demo");
     public static final Broker PAPER_SERVER = new Broker(System.getProperty("default_broker", "Pepperstone-Demo02").trim());
