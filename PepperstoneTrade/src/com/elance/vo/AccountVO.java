@@ -29,11 +29,11 @@ public class AccountVO {
 	public AccountVO(JTextField accountText,JTextField passwordText,MT4ConnectionUtil mt4ConnectionUtil){
 		this(accountText,passwordText);
 		this.mt4ConnectionUtil=mt4ConnectionUtil;
-		String[] cfg = mt4ConnectionUtil.getConfig();
-		if (cfg != null) {
-			accountText.setText(cfg[0]);
-			passwordText.setText(cfg[1]);
-		}
+//		String[] cfg = mt4ConnectionUtil.getConfig();
+//		if (cfg != null) {
+//			accountText.setText(cfg[0]);
+//			passwordText.setText(cfg[1]);
+//		}
 	}
 	
 	public AccountVO(JTextField accountText,JTextField passwordText,boolean loginSuccess,MT4ConnectionUtil mt4ConnectionUtil){

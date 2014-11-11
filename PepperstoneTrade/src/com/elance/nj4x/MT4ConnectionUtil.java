@@ -1,9 +1,6 @@
 package com.elance.nj4x;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,47 +22,27 @@ import com.jfx.strategy.Strategy;
 import com.jfx.strategy.StrategyRunner;
 
 public class MT4ConnectionUtil extends Strategy {
-    private int accNo;
+    
     private final ExecutorService threadPool;
-    private final ArrayList<Future<Long>> jobs;
+    private final List<Future<Long>> jobs;
     int accountOrderWorkers = 3;
     private ConcurrentHashMap<String, Tick> ticks;
+    
+    private ArrayList<OrderInfo> orders = new ArrayList<>();
 
-    public MT4ConnectionUtil(int accNo) {
-        this.accNo = accNo;
+    public MT4ConnectionUtil() {
         threadPool = Executors.newFixedThreadPool(accountOrderWorkers);
-        jobs = new ArrayList<>();
+        jobs = new ArrayList<Future<Long>>();
     }
 
-    private void saveConfig() {
-        try {
-            Files.write(getCfgPath(), (getMt4User() + '\u0001' + getMt4Password()).getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public ArrayList<OrderInfo> getOrders() {
+        return orders;
     }
-
-    public String[] getConfig() {
-        try {
-            Path cfgPath = getCfgPath();
-            if (cfgPath.toFile().exists()) {
-                String accPass = new String(Files.readAllBytes(cfgPath));
-                return accPass.split("\u0001");
-            }
-        } catch (IOException ignore) {
-        }
-        return null;
-    }
-
-    private Path getCfgPath() {
-        String pFilename = "acc" + accNo;
-        Path tmpDirPath = Paths.get(System.getProperty("java.io.tmpdir"));
-        return tmpDirPath.resolve(pFilename);
-    }
+    
 
     public boolean connect(String username, String password) throws Exception {
         System.out.println("======= Connecting ========= " + JFXServer.getInstance().getBindPort());
-        ticks = new ConcurrentHashMap<>();
+        ticks = new ConcurrentHashMap<String,Tick>();
         setBulkTickListener(new BulkTickListener() {
             @Override
             public void onTicks(List<Tick> list, MT4 mt4) {
@@ -75,7 +52,6 @@ public class MT4ConnectionUtil extends Strategy {
             }
         });
         connect("127.0.0.1", 7788, BrokerConfig.PAPER_SERVER, username, password);
-        saveConfig();
         addShutdownHook();
         connectOrderWorkers();
         return true;
@@ -98,12 +74,6 @@ public class MT4ConnectionUtil extends Strategy {
         for (int i = 0; i < accountOrderWorkers; i++) {
             addTerminal(TerminalType.ORDERS_WORKER).connect();
         }
-    }
-
-    private ArrayList<OrderInfo> orders = new ArrayList<>();
-
-    public ArrayList<OrderInfo> getOrders() {
-        return orders;
     }
 
     @Override

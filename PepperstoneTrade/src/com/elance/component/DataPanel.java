@@ -262,6 +262,7 @@ public class DataPanel extends JPanel {
     		AccountVO accountVO=null;
     		while(true){
     			if(!buttonStatusVO.needStopUpdate()){
+    				System.out.println("==========time:\t"+new java.util.Date());
     				selectedIndex=tabbedPane.getSelectedIndex();
         			accountVO=accountList.get(selectedIndex);
         			JPanel panel=(JPanel) tabbedPane.getSelectedComponent();
