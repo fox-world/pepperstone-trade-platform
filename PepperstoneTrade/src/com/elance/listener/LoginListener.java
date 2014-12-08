@@ -100,7 +100,7 @@ public class LoginListener implements ActionListener {
                 if (loginFinishCount == availableAccountCount) {
                     loginProcessFinished = true;
                     frame.getContentPane().remove(loginPanel);
-                    DataPanel dataPanel = new DataPanel(accountList, accountConfig);
+                    DataPanel dataPanel = new DataPanel(frame,accountList, accountConfig);
                     frame.getContentPane().add(dataPanel);
                     dataPanel.initTabPanel();
                     frame.revalidate();

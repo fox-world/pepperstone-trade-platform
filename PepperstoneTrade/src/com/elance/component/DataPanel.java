@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,6 +21,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import com.elance.listener.LogoutListener;
 import com.elance.listener.OrderListener;
 import com.elance.nj4x.MT4ConnectionUtil;
 import com.elance.util.OrderUtil;
@@ -36,6 +38,7 @@ public class DataPanel extends JPanel {
 
 	private static final long serialVersionUID = -8610183526601441962L;
 	
+	private JFrame frame;
 	private JPanel tabPanel;
 	private JPanel buttonPanel;
 	
@@ -46,7 +49,8 @@ public class DataPanel extends JPanel {
 	public DataPanel(){
 	}
 	
-	public DataPanel(List<AccountVO> accountList,AccountConfig accountConfig){
+	public DataPanel(JFrame frame,List<AccountVO> accountList,AccountConfig accountConfig){
+		this.frame=frame;
 		this.accountList=accountList;
 		this.accountConfig=accountConfig;
 		buttonStatusVO=new ButtonStatusVO();
@@ -121,6 +125,7 @@ public class DataPanel extends JPanel {
         
         JButton loginAgainButton=new JButton("Login Again");
         loginAgainButton.setBounds(677, 5, 120, 25);
+        loginAgainButton.addActionListener(new LogoutListener(frame, this, accountList, accountConfig));
         buttonPanel.add(loginAgainButton);
         
         //The following line enables to use scrolling tabs.
