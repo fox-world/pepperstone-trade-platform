@@ -102,7 +102,7 @@ public class OrderListener implements ActionListener {
         long startTime = System.currentTimeMillis();
         MT4ConnectionUtil mt4Util = accountVO.getMt4ConnectionUtil();
 
-        ArrayList<OrderInfo> allOrders = mt4Util.getOrders(); // use cache
+        List<OrderInfo> allOrders = mt4Util.getOrders(); // use cache
         List<OrderInfo> orderList = new ArrayList<OrderInfo>();
         for (OrderInfo orderInfo : allOrders) {
             if (orderInfo.getType() == TradeOperation.OP_BUY || orderInfo.getType() == TradeOperation.OP_SELL) {

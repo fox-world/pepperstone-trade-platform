@@ -76,7 +76,10 @@ public class LoginListener implements ActionListener {
 
                 loginProcessFinished = false;
                 String account = null;
-                for (AccountVO accountVO : accountList) {
+                AccountVO accountVO=null;
+                int availableAccountCount=Integer.parseInt(accountConfig.getServerNumberSpinner().getValue().toString());
+                for (int i=0;i<availableAccountCount;i++) {
+                	accountVO=accountList.get(i);
                     account = accountVO.getAccountText().getText();
                     try {
                         loginResult = account != null && account.length() > 0 && accountVO.getMt4ConnectionUtil().connect(account, accountVO.getPasswordText().getText());
@@ -94,7 +97,7 @@ public class LoginListener implements ActionListener {
                     loginFinishCount++;
                 }
 
-                if (loginFinishCount == accountList.size()) {
+                if (loginFinishCount == availableAccountCount) {
                     loginProcessFinished = true;
                     frame.getContentPane().remove(loginPanel);
                     DataPanel dataPanel = new DataPanel(accountList, accountConfig);

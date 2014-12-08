@@ -28,14 +28,14 @@ public class MT4ConnectionUtil extends Strategy {
     int accountOrderWorkers = 3;
     private ConcurrentHashMap<String, Tick> ticks;
     
-    private ArrayList<OrderInfo> orders = new ArrayList<>();
+    private List<OrderInfo> orders = new ArrayList<>();
 
     public MT4ConnectionUtil() {
         threadPool = Executors.newFixedThreadPool(accountOrderWorkers);
         jobs = new ArrayList<Future<Long>>();
     }
 
-    public ArrayList<OrderInfo> getOrders() {
+    public List<OrderInfo> getOrders() {
         return orders;
     }
     
@@ -83,7 +83,7 @@ public class MT4ConnectionUtil extends Strategy {
 
     public void loadOrders() {
         waitForAllJobsToComplete();
-        ArrayList<OrderInfo> ordersSnapshot = new ArrayList<>();
+        List<OrderInfo> ordersSnapshot = new ArrayList<>();
         int availableOrdersCount = ordersTotal();
         for (int i = 0; i < availableOrdersCount; i++) {
             OrderInfo o = orderGet(i, SelectionType.SELECT_BY_POS, SelectionPool.MODE_TRADES);

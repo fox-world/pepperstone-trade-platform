@@ -153,12 +153,19 @@ public class LoginPanel extends JPanel{
 		loginButton.setBounds(310,10, 80, ComponentConstants.BUTTON_HEIGHT);
 		buttonPanel.add(loginButton);
 		accountList.clear();
-		accountList.add(new AccountVO(accountText1,passwordText1,new MT4ConnectionUtil(1)));
-		accountList.add(new AccountVO(accountText2,passwordText2,new MT4ConnectionUtil(2)));
-		accountList.add(new AccountVO(accountText3,passwordText3,new MT4ConnectionUtil(3)));
-		accountList.add(new AccountVO(accountText4,passwordText4,new MT4ConnectionUtil(4)));
+		accountList.add(new AccountVO(accountText1,passwordText1,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText2,passwordText2,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText3,passwordText3,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText4,passwordText4,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText5,passwordText5,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText6,passwordText6,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText7,passwordText7,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText8,passwordText8,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText9,passwordText9,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText10,passwordText10,new MT4ConnectionUtil()));
 		loginButton.addActionListener(new LoginListener(frame,this,processingLabel,accountList,accountConfig));
 		
+		accountConfig.setServerNumberSpinner(serverNumberSpinner);
 		accountConfig.setMaxLotsSpinner(maxLotsSpinner);
 		accountConfig.setMaxTradesSpinner(maxTradesSpinner);
 		accountConfig.setLotSizeText(lotSizeText);
@@ -354,6 +361,15 @@ public class LoginPanel extends JPanel{
 				passwordText10=new JPasswordField();
 				passwordText10.setBounds(PASS_TEXT_X, COMPONENT_Y_10, ComponentConstants.COMPONENT_TEXT_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordText10);
+				
+				accountText1.setText("94955");
+				accountText2.setText("94956");
+				accountText3.setText("94957");
+				accountText4.setText("94958");
+				passwordText1.setText("3crcqkr");
+				passwordText2.setText("1nsgraw");
+				passwordText3.setText("gw4nwoz");
+				passwordText4.setText("gll3jon");
 	}
 	
 	public void addConfigComponents(){
