@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import com.jfx.Broker;
 import com.jfx.ErrUnknownSymbol;
 import com.jfx.MT4;
 import com.jfx.SelectionPool;
@@ -23,6 +24,7 @@ import com.jfx.strategy.StrategyRunner;
 
 public class MT4ConnectionUtil extends Strategy {
     
+	private Broker broker;
     private final ExecutorService threadPool;
     private final List<Future<Long>> jobs;
     int accountOrderWorkers = 3;
@@ -40,7 +42,7 @@ public class MT4ConnectionUtil extends Strategy {
     }
     
 
-    public boolean connect(String username, String password) throws Exception {
+    public boolean connect(String username, String password,String serverName) throws Exception {
         System.out.println("======= Connecting ========= " + JFXServer.getInstance().getBindPort());
         ticks = new ConcurrentHashMap<String,Tick>();
         setBulkTickListener(new BulkTickListener() {
@@ -51,7 +53,11 @@ public class MT4ConnectionUtil extends Strategy {
                 }
             }
         });
-        connect("127.0.0.1", 7788, BrokerConfig.PAPER_SERVER, username, password);
+        if(broker==null){
+            broker = new Broker(System.getProperty("default_broker", serverName).trim());
+            System.setProperty("jfx_activation_key", BrokerConfig.JFX_ACTIVATION_KEY);
+        }
+        connect("127.0.0.1", 7788,broker, username, password);
         addShutdownHook();
         connectOrderWorkers();
         return true;

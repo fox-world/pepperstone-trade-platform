@@ -114,7 +114,18 @@ public class LoginPanel extends JPanel{
 		accountConfig=new AccountConfig();
 	}
 	
-	public void showLoginPanel() {
+	public LoginPanel(JFrame frame,List<AccountVO> accountList){
+		this.frame=frame;
+		
+		accountPanel=new JPanel();
+		configPanel=new JPanel();
+		buttonPanel=new JPanel();
+
+		accountList=this.accountList;
+		accountConfig=new AccountConfig();
+	}
+	
+	public void showLoginPanel(boolean loginAll) {
 
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -148,23 +159,18 @@ public class LoginPanel extends JPanel{
 	    processingLabel.setBounds(2, 10, 250, 25);
 	    processingLabel.setVisible(false);
 	    buttonPanel.add(processingLabel);
-		
+	    if(loginAll){
+	    	initAccountList();
+	    }else{
+	    	resetAccountList(accountList);
+	    }
 		loginButton = new JButton("Login");
 		loginButton.setBounds(310,10, 80, ComponentConstants.BUTTON_HEIGHT);
 		buttonPanel.add(loginButton);
-		accountList.clear();
-		accountList.add(new AccountVO(accountText1,passwordText1,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText2,passwordText2,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText3,passwordText3,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText4,passwordText4,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText5,passwordText5,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText6,passwordText6,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText7,passwordText7,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText8,passwordText8,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText9,passwordText9,new MT4ConnectionUtil()));
-		accountList.add(new AccountVO(accountText10,passwordText10,new MT4ConnectionUtil()));
+	
 		loginButton.addActionListener(new LoginListener(frame,this,processingLabel,accountList,accountConfig));
 		
+		accountConfig.setServerNameText(serverNameText);
 		accountConfig.setServerNumberSpinner(serverNumberSpinner);
 		accountConfig.setMaxLotsSpinner(maxLotsSpinner);
 		accountConfig.setMaxTradesSpinner(maxTradesSpinner);
@@ -188,6 +194,82 @@ public class LoginPanel extends JPanel{
 	    	
 	    });
 	
+	}
+	
+	public void initAccountList(){
+		accountList.clear();
+		accountList.add(new AccountVO(accountText1,passwordText1,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText2,passwordText2,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText3,passwordText3,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText4,passwordText4,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText5,passwordText5,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText6,passwordText6,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText7,passwordText7,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText8,passwordText8,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText9,passwordText9,new MT4ConnectionUtil()));
+		accountList.add(new AccountVO(accountText10,passwordText10,new MT4ConnectionUtil()));
+	}
+	
+	public void resetAccountList(List<AccountVO> accountList){
+		accountText1.setText(accountList.get(0).getAccountText().getText());
+		passwordText1.setText(accountList.get(0).getPasswordText().getText());
+		if(accountList.get(0).isLoginSuccess()){
+			accountText1.setEnabled(false);
+		}
+		
+		accountText2.setText(accountList.get(1).getAccountText().getText());
+		passwordText2.setText(accountList.get(1).getPasswordText().getText());
+		if(accountList.get(1).isLoginSuccess()){
+			accountText2.setEnabled(false);
+		}
+		
+		accountText3.setText(accountList.get(2).getAccountText().getText());
+		passwordText3.setText(accountList.get(2).getPasswordText().getText());
+		if(accountList.get(2).isLoginSuccess()){
+			accountText3.setEnabled(false);
+		}
+		
+		accountText4.setText(accountList.get(3).getAccountText().getText());
+		passwordText4.setText(accountList.get(3).getPasswordText().getText());
+		if(accountList.get(3).isLoginSuccess()){
+			accountText4.setEnabled(false);
+		}
+		
+		accountText5.setText(accountList.get(4).getAccountText().getText());
+		passwordText5.setText(accountList.get(4).getPasswordText().getText());
+		if(accountList.get(4).isLoginSuccess()){
+			accountText5.setEnabled(false);
+		}
+		
+		accountText6.setText(accountList.get(5).getAccountText().getText());
+		passwordText6.setText(accountList.get(5).getPasswordText().getText());
+		if(accountList.get(5).isLoginSuccess()){
+			accountText6.setEnabled(false);
+		}
+		
+		accountText7.setText(accountList.get(6).getAccountText().getText());
+		passwordText7.setText(accountList.get(6).getPasswordText().getText());
+		if(accountList.get(6).isLoginSuccess()){
+			accountText7.setEnabled(false);
+		}
+		
+		accountText8.setText(accountList.get(7).getAccountText().getText());
+		passwordText8.setText(accountList.get(7).getPasswordText().getText());
+		if(accountList.get(7).isLoginSuccess()){
+			accountText8.setEnabled(false);
+		}
+		
+		accountText9.setText(accountList.get(8).getAccountText().getText());
+		passwordText9.setText(accountList.get(8).getPasswordText().getText());
+		if(accountList.get(8).isLoginSuccess()){
+			accountText9.setEnabled(false);
+		}
+		
+		accountText10.setText(accountList.get(9).getAccountText().getText());
+		passwordText10.setText(accountList.get(9).getPasswordText().getText());
+		if(accountList.get(9).isLoginSuccess()){
+			accountText10.setEnabled(false);
+		}
 	}
 
 	public void addAccountComponents(){
@@ -362,7 +444,7 @@ public class LoginPanel extends JPanel{
 				passwordText10.setBounds(PASS_TEXT_X, COMPONENT_Y_10, ComponentConstants.COMPONENT_TEXT_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
 				accountPanel.add(passwordText10);
 				
-				accountText1.setText("94955");
+/*				accountText1.setText("94955");
 				accountText2.setText("94956");
 				accountText3.setText("94957");
 				accountText4.setText("94958");
@@ -370,6 +452,22 @@ public class LoginPanel extends JPanel{
 				passwordText2.setText("1nsgraw");
 				passwordText3.setText("gw4nwoz");
 				passwordText4.setText("gll3jon");
+				
+//				accountText1.setText("97253");
+//				passwordText1.setText("rztw5ru");
+				accountText5.setText("101302");
+				accountText6.setText("101303");
+				accountText7.setText("101305");
+				accountText8.setText("101306");
+				accountText9.setText("101307");
+				accountText10.setText("101308");
+				
+				passwordText5.setText("pkfd1kp");
+				passwordText6.setText("dpnl3ps");
+				passwordText7.setText("ddkm3po");
+				passwordText8.setText("ddcp2bf");
+				passwordText9.setText("ep1ksap");
+				passwordText10.setText("l7fwbqv");*/
 	}
 	
 	public void addConfigComponents(){
@@ -399,6 +497,7 @@ public class LoginPanel extends JPanel{
 				
 				serverNameText=new JTextField();
 				serverNameText.setBounds(120, 80, ComponentConstants.COMPONENT_TEXT_WIDTH, ComponentConstants.COMPONENT_HEIGHT);
+				serverNameText.setText("Pepperstone-Demo02");
 				configPanel.add(serverNameText);
 				
 				JLabel maxLotsLabel=new JLabel("Max lots:");
@@ -453,26 +552,27 @@ public class LoginPanel extends JPanel{
 	}
 	
 	public void changeComponentsEnableStatus(boolean isEnabled){
-		accountText1.setEnabled(isEnabled);
-		passwordText1.setEnabled(isEnabled);
-		accountText2.setEnabled(isEnabled);
-		passwordText2.setEnabled(isEnabled);
-		accountText3.setEnabled(isEnabled);
-		passwordText3.setEnabled(isEnabled);
-		accountText4.setEnabled(isEnabled);
-		passwordText4.setEnabled(isEnabled);
-		accountText5.setEnabled(isEnabled);
-		passwordText5.setEnabled(isEnabled);
-		accountText6.setEnabled(isEnabled);
-		passwordText6.setEnabled(isEnabled);
-		accountText7.setEnabled(isEnabled);
-		passwordText7.setEnabled(isEnabled);
-		accountText8.setEnabled(isEnabled);
-		passwordText8.setEnabled(isEnabled);
-		accountText9.setEnabled(isEnabled);
-		passwordText9.setEnabled(isEnabled);
-		accountText10.setEnabled(isEnabled);
-		passwordText10.setEnabled(isEnabled);
+		accountText1.setEditable(isEnabled);
+		passwordText1.setEditable(isEnabled);
+		accountText2.setEditable(isEnabled);
+		passwordText2.setEditable(isEnabled);
+		accountText3.setEditable(isEnabled);
+		passwordText3.setEditable(isEnabled);
+		accountText4.setEditable(isEnabled);
+		passwordText4.setEditable(isEnabled);
+		accountText5.setEditable(isEnabled);
+		passwordText5.setEditable(isEnabled);
+		accountText6.setEditable(isEnabled);
+		passwordText6.setEditable(isEnabled);
+		accountText7.setEditable(isEnabled);
+		passwordText7.setEditable(isEnabled);
+		accountText8.setEditable(isEnabled);
+		passwordText8.setEditable(isEnabled);
+		accountText9.setEditable(isEnabled);
+		passwordText9.setEditable(isEnabled);
+		accountText10.setEditable(isEnabled);
+		passwordText10.setEditable(isEnabled);
+	
 		
 		loginButton.setEnabled(isEnabled);
 		resetButton.setEnabled(!isEnabled);

@@ -106,26 +106,31 @@ public class DataPanel extends JPanel {
         buttonPanel.add(openBuyButton);
         
         JButton openSellButton=new JButton("Open Sell");
-        openSellButton.setBounds(110, 5, 100, 25);
+        openSellButton.setBounds(105, 5, 100, 25);
         openSellButton.addActionListener(new OrderListener(OrderAction.OPEN_SELL,accountList,accountConfig,buttonStatusVO));
         buttonPanel.add(openSellButton);
         
         JButton closeButton=new JButton("Close");
-        closeButton.setBounds(218, 5, 100, 25);
+        closeButton.setBounds(208, 5, 75, 25);
         closeButton.addActionListener(new OrderListener(OrderAction.CLOSE,accountList,accountConfig,buttonStatusVO));
         buttonPanel.add(closeButton);
         
         JButton hedgeButton=new JButton("Hedge");
-        hedgeButton.setBounds(325, 5, 100, 25);
+        hedgeButton.setBounds(286, 5, 80, 25);
         buttonPanel.add(hedgeButton);
         
         JButton closeHedgeButton=new JButton("Close Hedge");
-        closeHedgeButton.setBounds(432, 5, 120, 25);
+        closeHedgeButton.setBounds(370, 5, 110, 25);
         buttonPanel.add(closeHedgeButton);
+        
+        JButton reloginButton=new JButton("Failed Accounts Login");
+        reloginButton.setBounds(510, 5, 160, 25);
+        reloginButton.addActionListener(new LogoutListener(frame, this, accountList, accountConfig,false));
+        buttonPanel.add(reloginButton);
         
         JButton loginAgainButton=new JButton("Login Again");
         loginAgainButton.setBounds(677, 5, 120, 25);
-        loginAgainButton.addActionListener(new LogoutListener(frame, this, accountList, accountConfig));
+        loginAgainButton.addActionListener(new LogoutListener(frame, this, accountList, accountConfig,true));
         buttonPanel.add(loginAgainButton);
         
         //The following line enables to use scrolling tabs.

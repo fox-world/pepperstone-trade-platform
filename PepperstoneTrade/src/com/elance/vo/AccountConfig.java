@@ -14,12 +14,21 @@ public class AccountConfig {
 		executorService = Executors.newCachedThreadPool();
 	}
     
+	private JTextField serverNameText;
 	private JSpinner serverNumberSpinner;
 	private JSpinner maxLotsSpinner;
 	private JSpinner maxTradesSpinner;
 	private JTextField lotSizeText;
 	private JTextField hedgePipsText;
 	private ButtonGroup hedgeProButtonGroup;
+
+	public JTextField getServerNameText() {
+		return serverNameText;
+	}
+
+	public void setServerNameText(JTextField serverNameText) {
+		this.serverNameText = serverNameText;
+	}
 
 	public JSpinner getServerNumberSpinner() {
 		return serverNumberSpinner;

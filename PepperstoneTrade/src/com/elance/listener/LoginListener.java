@@ -1,17 +1,20 @@
 package com.elance.listener;
 
-import com.elance.component.DataPanel;
-import com.elance.component.LoginPanel;
-import com.elance.vo.AccountConfig;
-import com.elance.vo.AccountVO;
-
-import javax.swing.*;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import com.elance.component.DataPanel;
+import com.elance.component.LoginPanel;
+import com.elance.vo.AccountConfig;
+import com.elance.vo.AccountVO;
 
 public class LoginListener implements ActionListener {
 
@@ -82,7 +85,7 @@ public class LoginListener implements ActionListener {
                 	accountVO=accountList.get(i);
                     account = accountVO.getAccountText().getText();
                     try {
-                        loginResult = account != null && account.length() > 0 && accountVO.getMt4ConnectionUtil().connect(account, accountVO.getPasswordText().getText());
+                        loginResult = account != null && account.length() > 0 && accountVO.getMt4ConnectionUtil().connect(account, accountVO.getPasswordText().getText(),accountConfig.getServerNameText().getText());
                     } catch (Exception e) {
                         e.printStackTrace();
                         loginResult = false;
@@ -92,7 +95,10 @@ public class LoginListener implements ActionListener {
                     accountVO.setLoginSuccess(loginResult);
                     if (loginResult) {
                         System.out.println("==========" + account + " login success!");
+                        accountVO.getAccountText().setForeground(Color.BLUE);
                         accountVO.setConnectTime(new Date());
+                    }else{
+                    	accountVO.getAccountText().setForeground(Color.RED);
                     }
                     loginFinishCount++;
                 }

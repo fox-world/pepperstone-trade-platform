@@ -18,22 +18,25 @@ public class LogoutListener implements ActionListener {
 	private DataPanel dataPanel;
     private List<AccountVO> accountList;
     private AccountConfig accountConfig;
+    private boolean loginAll;
 
-    public LogoutListener(JFrame frame,DataPanel dataPanel,List<AccountVO> accountList,AccountConfig accountConfig){
+    public LogoutListener(JFrame frame,DataPanel dataPanel,List<AccountVO> accountList,AccountConfig accountConfig,boolean loginAll){
     	this.frame=frame;
     	this.dataPanel=dataPanel;
     	this.accountList=accountList;
     	this.accountConfig=accountConfig;
+    	this.loginAll=loginAll;
     }
     
 	@Override
 	public void actionPerformed(ActionEvent e) {
         int availableAccountCount=Integer.parseInt(accountConfig.getServerNumberSpinner().getValue().toString());
         AccountVO accountVO=null;
+        LoginPanel loginPanel=null;
         try {
 			for(int i=0;i<availableAccountCount;i++){
 				accountVO=accountList.get(i);
-				if(accountVO.isLoginSuccess()){
+				if(loginAll&&accountVO.isLoginSuccess()){
 					accountVO.getMt4ConnectionUtil().close();
 				}
 			}
@@ -41,8 +44,12 @@ public class LogoutListener implements ActionListener {
 			ex.printStackTrace();
 		}
         frame.getContentPane().remove(dataPanel);
-        LoginPanel loginPanel=new LoginPanel(frame);
-        loginPanel.showLoginPanel();
+        if(loginAll){
+        	loginPanel=new LoginPanel(frame);
+        }else{
+            loginPanel=new LoginPanel(frame,accountList);
+        }
+        loginPanel.showLoginPanel(loginAll);
         frame.getContentPane().add(loginPanel);
         frame.revalidate();
 	}

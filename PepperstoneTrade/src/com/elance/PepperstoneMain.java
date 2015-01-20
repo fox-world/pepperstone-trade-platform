@@ -15,13 +15,13 @@ public class PepperstoneMain {
 	}
 	
 	public void startApp(){
-		frame = new JFrame("Pepperstone Multiple Platform Trade Software");
+		frame = new JFrame("Pepperstone Multiple Platform Trade Software(Live Account)");
 		frame.setSize(820,675);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		loginPanel=new LoginPanel(frame);
-		loginPanel.showLoginPanel();
+		loginPanel.showLoginPanel(true);
 		frame.add(loginPanel);
 		frame.setLocation(300,150);
 
